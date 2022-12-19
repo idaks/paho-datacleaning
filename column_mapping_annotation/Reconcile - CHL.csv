@@ -1,0 +1,52 @@
+,,,Niko,,,,,Lan,,,,
+CHLDIAB1,Translation,Example,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description
+Codigo,Code,8634657,NA,,,,,NA,,,,
+Tipo de Adquisicion,Acquisition Type,Licitación Pública Entre 100 y 1000 UTM (LE),Purchase Mechanism,Split; Vocabulary mapping,Map Text to Control Vocabulary,Partial String Matching,because the target only contains partial values (e.g: Licitacion),Purchase Mechanism [First word],Split,Split value by separator ,"value matching ---> only find the initial word
+from the data values appear in target column",
+Estado,Condition,8,NA,,,,,NA,,,,"The distribution of values in column is not 
+equal to target columns."
+Nombre Organismo,Name Agency,I MUNICIPALIDAD DE NACIMIENTO,Entity,No,,String Matching,,Entity ,No,,value matching ,
+Region Unidad,Region Unit,Región del Biobío,Point of Delivery,No,,String Matching,,Region,No,,value matching ,
+Codigo Moneda,Code Currency,CLP,NA,,,,,NA,,,,
+Fecha Creacion,Creation date,1/2/2020,NA,,,,,NA,,,,lack context information on the date information
+Fecha Publicacion,Publication date,1/6/2020,NA,,,,,NA,,,,DOM also has this column: Publication date
+Fecha Adjudicacion,Award Date,2/7/2020,Purchase Date,,,Column Matching,Most related column for purchasing,NA,,,,
+Fuente Financiamiento,Funding Source,Presupuesto Disponible,Program,No,,String Matching,,Program,Formatting ,"Uppercase and Lowercase
+are mixed",value matching ,
+Descripcion linea Adquisicion,Acquisition line description,"EMPAGLIFLOZINA 12,5 MG; METFORMINA 850 MG. COMPRIMIDOS RECUBIERTOS. ENVASE SELLADO, RESISTENTE E INADULTERADO. SIMILAR A JARDIANCE DUO",Country Product Name,Split,Potentially either split or merged within country product name and country product description,Partial String Matching,,Country Product Name ,"Split, Merge","Split values into separate components
+do value matching one by one;
+then Merge values ","data patterns matching at 
+syntatic level",
+Descripcion Proveedor,Supplier Description,"BOE0100 JARDIANCE 12,5 MG850 MG X 60 COMP Entrega 24-48 HR EMPAGLIFLOZINAMETFORMINA F-21912 BOEHRINGER 30-03-2021",Country Product Description,Split,"Not sure, but the value similar with product name",Partial String Matching,,Country Product Description,"Split, 
+Entity type recognition
+Add new column(s)","Ontology-based name entity recognition
+The pattern should be predefined ","the structure of the values, 
+combined with data patterns analysis.
+e.g., 
+it always starts with three alphabset following four digits ","It is hard to deal with values of long sequences,
+so split the values into entities properly is important .
+For instance, the last data value is of date format.  we might consider extract this information and create a new column "
+Unidad Medida,Unit of measure,Comprimido,Country Product Description,Merge,,,,Country Product Description,merge,,,
+Nombre Proveedor,Provider Name,Caribean Pharma Ltda,Supplier,No,,String Matching,,Supplier ,Formatting ,Uppercase and Lowercase mixed,"semantic meaning of column names;
+value matching ",
+Estado Oferta,Offer Status,Aceptada,Country Product Description,Merge,Ambigously defined on a same column as Unidad Medida,Partial String Matching,,Country Product Description,merge,"the values belong to partial of values on
+target column: Country Product Description",value matching ,
+Cantidad Ofertada,Amount Offered,300,NA,,,,,NA,,,,
+Moneda de la Oferta,Bid Currency,Peso Chileno,NA,,,,,NA,,,,
+Monto Unitario Oferta,Offer Unit Amount,759,Unit Quantity,No,,Column Matching,,Unit quantity ,,,,
+Valor Total Ofertado,Total Value Offered,227700,NA,,,,,NA,,,,
+Cantidad Adjudicada,Amount Awarded,0,NA,,,,,NA,,,,
+Monto Linea Adjudica,Award Line Amount,0,NA,,,,,NA,,,,
+Fecha Envio Oferta,Offer Submission Date,1/15/2020,NA,,,,,NA,,,,
+Oferta seleccionada,selected offer,No Seleccionada,NA,,,,,NA,,,,
+CHL-USD,USD-CHL,797.137,NA,,,,,NA,,,,
+Monto Unitario Oferta USD,Unit Amount Bid USD,0.952157534,NA,,,,,NA,,,,
+Monto Linea Adjudica USD,Line Amount Awarded USD,0,NA,,,,,NA,,,,
+Valor Total Ofertado USD,Total Value Offered USD,285.6472601,Total Amount,,,,,Total Amount ,,,,
+Tipo de Institucion,Institution Type,Servicio de Salud,Entity Type,No,,String Matching,,Entity Type,No,,value matching; column names,

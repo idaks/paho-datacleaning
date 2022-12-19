@@ -1,0 +1,49 @@
+,,,,Niko,,,,,Lan,,,,
+BRAantineoplasticos1,,Translation,Example,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description
+Item Data,CÃ³digo BR,BR code,BR0268403,NA,,,,,NA,,,,
+,DescriÃ§Ã£oÂ CATMAT,Description CATMAT,"CAPECITABINA, DOSAGEM:500 MG",Country Product Name,No,,Values Matching,"It looks like it has a pattern of Name, Dosage, but the values are directly copied",Country Product Name,"Split, Merge","Split values into separate components
+do value matching one by one;
+then Merge values ","data patterns matching at 
+syntatic level","Is the column name (""Country Product Name"") really meaningful?"
+,Â Unidade de FornecimentoÂ,Â Forwarding UnitÂ,COMPRIMIDO - GENÃ‰RICO,Country Product Description,Split,"Split based on separator -, index 0 for Forwarding unit, 1 for Generic",Values Matching,"Some has combined values, the combined values need to be cleaned",Country Product Description,No,,value matching ,
+,GenÃ©rico,generic,Sim,Generic,Translation,"Nao: non generic, Sim: generic",Values Matching,,Generic ,"Translation;
+Value replacement ","There are three types of generic values: 
+{Generic, Non Generic, Unknown};
+Apply Translation on this column from raw
+data first, and then replace values with data
+values in clean dataset. ",column name ,
+Purchase Data,Registro Anvisa,Anvisa Registration,1.47E+12,NA,,,,,,,,,
+,Â Data CompraÂ,Â Data PurchaseÂ,4/8/2021,Purchase Date,Formatting,Date Formatting,Column Matching,make sure its on proper target format,Purchase Date,Formatting ,date format ,"semantic meaning of the columns;
+data patterns matching at syntactic 
+level","date-of-time from clean database include hr-min-sec; 
+we might also add this information"
+,Modalidade da Compra,Purchase modality,PregÃ£o,NA,,,,"Contains two values:  Pregão
+Dispensa de Licitação (Trading
+Exemption from bidding)",,,,,
+,Â Data InserÃ§Ã£o,Â Inserted Data,29/11/2021,NA,,,,,NA,,,,
+,Tipo Compra,Purchase Type,A,NA,,,,,,,,,
+Manufacturer Supplier Data,Fabricante,Maker,SUN FARMACEUTICA DO BRASIL LTDA,Manufacturer,No,,Values Matching,,Manufacturer ,No,,value matching ,
+,CNPJ Fabricante,CNPJ Manufacturer,05.035.244/0001-23,NA,,,,,NA,,,"CNPJ data patterns:
+XX.XXX.XXX/0001-XX",
+,Fornecedor,Provider,SIGEL DISTRIBUIDORA DE MEDICAMENTOS LTDA,Supplier,No,,Values Matching,,Supplier ,No,,"semantic meaning of the columns;
+value matching ",
+,CNPJ Fornecedor,CNPJ Provider,27.191.294/0001-32,NA,,,,,NA,,,,
+Institution Data,Nome InstituiÃ§Ã£o,Name Institution,INSTITUTO CURITIBA DE SAUDE,Entity,No,,Values Matching,,Entity ,No,,value matching ,
+,CNPJ InstituiÃ§Ã£o,CNPJ Institution,03.518.900/0001-13,NA,,,,,NA,,,,
+,MunicÃ­pio InstituiÃ§Ã£o,Municipality Institute,CURITIBA,Point of Delivery,No,,Values Matching,,Point of Delivery ,Clustering ,Check data spellings by clustering ,value matching ,
+,UF,PHEW,PR,NA,,,,"there are set ov values: SP, PR, MG, PE",NA,,,,"domain knowledge is requried;
+lack the semantic information of column "
+ Amounts,Qtd Itens Comprados,Qtd Items Purchased,"850,000",Total Amount,No,,Column Matching,,Total Amount ,,,,
+,PreÃ§o UnitÃ¡rio,Unit Price,"46,073",Min Unit Price USD,Currency Transformation,,Column Matching,Target currency in $,NA,,,,
+,CMED - PreÃ§o Regulado,CMED - Regulated Price,"164,487",NA,,,,,NA,,,,
+,CompetÃªncia CMED,CMED Competition,22-Feb,NA,,,,,NA,,,,
+,Â MÃ©dia PonderadaÂ,Â Weighted Average,"55,886",NA,,,,,Min Unit Price USD,currency translation,multiply values with currency rate ,"semantic meaning of the columns;
+column relationships from clean
+database","Clean database: 
+Total Amount/Unit Quantity = Min Unit Price USD"

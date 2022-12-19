@@ -1,0 +1,26 @@
+,,,Niko,,,,,Lan,,,,
+PERantineoplastics1,Translation,Example,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description
+RazonSocial,Business name,REFASA SAC,Supplier,No,,String Matching,,Supplier,No,,value matching ,
+Código Entidad,Entity Code,1,NA,,,,,NA,,,,
+Entidad,Entity,MINSA,Entity,No,,,,Entity,merge,"separator is used to do the
+merging ",partial value matching,values in target column Entity is composed of values from column Entity in raw dataset and values from column Establishment
+Código Disa/Diresa,Code Disa/Diresa,132,NA,,,,,NA,,,,
+Establecimiento,Establishment,INEN,NA,,,,,Entity,merge,"separator is used to do the
+merging ",partial value matching ,values in target column Entity is composed of values from column Entity in raw dataset and values from column Establishment
+Código Unidad Ejecutora,Executing Unit Code,1235,NA,,,,,NA,,,,
+Punto de Entrega,Delivery point,INSTITUTO NACIONAL DE ENFERMEDADES NEOPLÁSICAS,Point of Delivery,No,,Column Matching,,Point of Delivery,No,,value matching,
+Identificación Proceso,Process Identification,LP SIP N 12 2012,NA,,,,,NA,,,,
+Código Producto,Product code,4665,NA,,,,,NA,,,,
+Producto,Product,MERCAPTOPURINA 50 MG TAB,Country Product Name,No,,String Matching,,Country Product Name,No,,value matching ,
+Cantidad,Quantity,239500,Unit Quantity,No,,Column Matching,,Unit Quantity,,,,
+Precio Unitario Referencial,Referential Unit Price,0.4841,Min Unit Price USD,,,Column Matching,,NA,,,,
+Monto Total Referencial,Referential Total Amount,115942,Total Amount,,,Column Matching,,NA,,,,
+Precio Unitario Ofertado,Offered Unit Price,0.425948,NA,,,,,Min Unit Price USD,,,,
+Monto Total Ofertado,Total Amount Offered,102014.6,NA,,,,,Total Amount,No,,semantic of column names,
+Pais,Country,,NA,,,,,NA,,,,

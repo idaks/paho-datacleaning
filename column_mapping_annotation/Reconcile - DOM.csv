@@ -1,0 +1,27 @@
+,,,,,,,,,,,,
+DOMComprasCardio,Translation,Example,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description,"Potential Col Mapping
+(CleanDatabase)","Requires
+Processing/Formatting","Detailed
+Processing/Formatting",Reasoning or How you decide mapping,Additional Thought / Description
+CODIGO_UNIDAD_COMPRA,PURCHASE_UNIT_CODE,582,NA,,,,,NA,,,,
+UNIDAD_COMPRA,PURCHASE_UNIT,Programa de Medicamentos Esenciales,Entity,No,,String Matching,,Entity ,No,,value matching,
+CODIGO_PROCESO,PROCESS_CODE,PROMESECAL-MAE-PEUR-2020-0002,NA,,,,,NA,,,,
+MODALIDAD,MODALITY,Procesos de ExcepciÃ³n,NA,,,,,NA,,,,
+ESTADO_PROCESO,PROCESS_STATE,Proceso adjudicado y celebrado,NA,,,,,NA,,,,
+FECHA_PUBLICACION,PUBLICATION DATE,4/29/2020 12:00,Purchase date,Date Formatting,Make Sure follow standard formatting,Column Matching,,Purchase Date,Formatting,Date format,data patterns ,
+ID_ARTICULO,ARTICLE_ID,22739741,NA,,,,,NA,,,,
+SUBCLASE_UNSPSC,SUBCLASS_UNSPSC,51101503,NA,,,,,NA,,,,
+DESCRIPCION_SUBCLASE,SUBCLASS_DESCRIPTION,Cloranfenicol,Country Product Description,,,String Matching,,Country Product Description,No,,value matching ,
+DESCRIPCION_ARTICULO,ARTICLE_DESCRIPTION,49(9032) Carvedilol 12.5 mg /Comprimido/Tab.,Catalog Name,,,,,Country Product Name,Formatting,"uppercase & lowercase;
+special character",data patterns,
+CANTIDAD,AMOUNT,1500000,Unit Quantity,,,Coumn Matching,,NA,,,,
+ABR_UNIDAD_MEDIDA,ABR_UNIT_MEASURE,UD,NA,,,,,Country Product Description,merge,partial value matching , partial value matching between target column is used,
+DESCRIPCION_UNIDAD_MEDIDA,DESCRIPTION_UNIT_MEASUREMENT,Unidad,Country Product Description,Merge,,Partial String Matching,target column has this value,Country Product Name,merge,partial value matching ,"ABR_UNIT_MEASURE is the acronymize of values in column DESCRIPTION_UNIT_MEASUREMENT
+""UD --> Unidad
+CAJ --> Caja""",
+PRECIO_UNITARIO_ESTIMADO,ESTIMATED_UNIT_PRICE,0,Min Unit Price USD,,,Column Matching,,Min Unit Price USD,currency translation,,semantic information of the column name,
+MONTO_TOTAL_ESTIMADO,ESTIMATED_TOTAL_AMOUNT,705000,Total Amount,Currency,Not sure whether this is already USD,Column Matching,,Total Amount,,,semantic information of the column name,
+CUENTA_PRESUPUESTARIA,BUDGET_ACCOUNT,2.3.4.1.01,NA,,,,,NA,,,,
