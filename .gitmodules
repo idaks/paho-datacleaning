@@ -1,0 +1,3 @@
+[submodule "PAHO-Drug-Data-Cleaning-Summer-2022"]
+	path = PAHO-Drug-Data-Cleaning-Summer-2022
+	url = git@github.com:nikolausn/PAHO-Drug-Data-Cleaning-Summer-2022.git
