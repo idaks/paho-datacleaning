@@ -7,5 +7,5 @@ Directory Structure:
 
 to completely clone the repo (using ssh): 
 ```
-git clone --recursive git@github.com:nikolausn/PAHO-Drug-Data-Cleaning-Summer-2022.git
+git clone --recursive git@github.com:idaks/paho-datacleaning.git
 ```
