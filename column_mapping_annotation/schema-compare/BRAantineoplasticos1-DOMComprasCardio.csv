@@ -1,0 +1,23 @@
+BRAantineoplasticos1,DOMComprasCardio
+Código BR,Código BR
+Descrição CATMAT,Descrição CATMAT
+ Unidade de Fornecimento , Unidade de Fornecimento 
+Genérico,Genérico
+Registro Anvisa,Registro Anvisa
+ Data Compra , Data Compra 
+Modalidade da Compra,Modalidade da Compra
+ Data Inserção, Data Inserção
+Tipo Compra,Tipo Compra
+Fabricante,Fabricante
+CNPJ Fabricante,CNPJ Fabricante
+Fornecedor,Fornecedor
+CNPJ Fornecedor,CNPJ Fornecedor
+Nome Instituição,Nome Instituição
+CNPJ Instituição,CNPJ Instituição
+Município Instituição,Município Instituição
+UF,UF
+Qtd Itens Comprados,Qtd Itens Comprados
+Preço Unitário,Preço Unitário
+CMED - Preço Regulado,CMED - Preço Regulado
+Competência CMED,Competência CMED
+ Média Ponderada , Média Ponderada 

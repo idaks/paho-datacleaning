@@ -1,0 +1,30 @@
+CHLDiab1,DOMComprasCardio
+Unnamed: 0,Competência CMED
+Codigo,Código BR
+Tipo de Adquisicion,Tipo Compra
+Estado,Qtd Itens Comprados
+Nombre Organismo,Nome Instituição
+Region Unidad,Registro Anvisa
+Codigo Moneda,Código BR
+Fecha Creacion,Fabricante
+Fecha Publicacion,Fabricante
+Fecha Adjudicacion,Fabricante
+Fuente Financiamiento, Unidade de Fornecimento 
+Descripcion linea Adquisicion,Município Instituição
+Descripcion Proveedor,CNPJ Fornecedor
+Unidad Medida,Competência CMED
+Nombre Proveedor,Fornecedor
+Estado Oferta,Tipo Compra
+Cantidad Ofertada, Média Ponderada 
+Moneda de la Oferta,Modalidade da Compra
+Monto Unitario Oferta,Preço Unitário
+Valor Total Ofertado, Data Compra 
+Cantidad Adjudicada,Modalidade da Compra
+Monto Linea Adjudica,Modalidade da Compra
+Fecha Envio Oferta,Fornecedor
+Oferta seleccionada,Descrição CATMAT
+CHL-USD,CMED - Preço Regulado
+Monto Unitario Oferta USD,Preço Unitário
+Monto Linea Adjudica USD,Modalidade da Compra
+Valor Total Ofertado USD,Qtd Itens Comprados
+Tipo de Institucion,Nome Instituição

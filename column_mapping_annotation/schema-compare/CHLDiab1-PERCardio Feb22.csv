@@ -1,0 +1,30 @@
+CHLDiab1,PERCardio Feb22
+Unnamed: 0,Entidad
+Codigo,Código Entidad
+Tipo de Adquisicion,Producto
+Estado,Entidad
+Nombre Organismo,Punto de Entrega
+Region Unidad,Entidad
+Codigo Moneda,Código Entidad
+Fecha Creacion,Establecimiento
+Fecha Publicacion,Establecimiento
+Fecha Adjudicacion,Precio Unitario Referencial
+Fuente Financiamiento,Establecimiento
+Descripcion linea Adquisicion,Precio Unitario Ofertado
+Descripcion Proveedor,Identificación Proceso
+Unidad Medida,Entidad
+Nombre Proveedor,Código Producto
+Estado Oferta,Precio Unitario Ofertado
+Cantidad Ofertada,Cantidad
+Moneda de la Oferta,Monto Total Ofertado
+Monto Unitario Oferta,Precio Unitario Ofertado
+Valor Total Ofertado,Monto Total Ofertado
+Cantidad Adjudicada,Cantidad
+Monto Linea Adjudica,Monto Total Ofertado
+Fecha Envio Oferta,Precio Unitario Ofertado
+Oferta seleccionada,Establecimiento
+CHL-USD,Cantidad
+Monto Unitario Oferta USD,Precio Unitario Ofertado
+Monto Linea Adjudica USD,Monto Total Ofertado
+Valor Total Ofertado USD,Monto Total Ofertado
+Tipo de Institucion,Punto de Entrega

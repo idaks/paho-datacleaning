@@ -1,0 +1,23 @@
+BRAantineoplasticos1,PERCardio Feb22
+Código BR,Código Producto
+Descrição CATMAT,Establecimiento
+ Unidade de Fornecimento ,Código Unidad Ejecutora
+Genérico,Entidad
+Registro Anvisa,Precio Unitario Referencial
+ Data Compra ,Código Unidad Ejecutora
+Modalidade da Compra,Código Unidad Ejecutora
+ Data Inserção,Identificación Proceso
+Tipo Compra,Producto
+Fabricante,Cantidad
+CNPJ Fabricante,Identificación Proceso
+Fornecedor,Código Unidad Ejecutora
+CNPJ Fornecedor,Identificación Proceso
+Nome Instituição,Establecimiento
+CNPJ Instituição,Precio Unitario Ofertado
+Município Instituição,Código Entidad
+UF,Producto
+Qtd Itens Comprados,Monto Total Ofertado
+Preço Unitário,Precio Unitario Ofertado
+CMED - Preço Regulado,Código Producto
+Competência CMED,Código Entidad
+ Média Ponderada ,Código Entidad

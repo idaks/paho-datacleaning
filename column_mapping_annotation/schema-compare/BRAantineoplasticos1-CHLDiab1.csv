@@ -1,0 +1,23 @@
+BRAantineoplasticos1,CHLDiab1
+Código BR,Codigo
+Descrição CATMAT,Descripcion linea Adquisicion
+ Unidade de Fornecimento ,Fuente Financiamiento
+Genérico,Tipo de Institucion
+Registro Anvisa,Region Unidad
+ Data Compra ,Cantidad Ofertada
+Modalidade da Compra,Moneda de la Oferta
+ Data Inserção,Valor Total Ofertado
+Tipo Compra,Estado Oferta
+Fabricante,Fecha Publicacion
+CNPJ Fabricante,Fecha Publicacion
+Fornecedor,Nombre Proveedor
+CNPJ Fornecedor,Nombre Proveedor
+Nome Instituição,Tipo de Institucion
+CNPJ Instituição,Tipo de Institucion
+Município Instituição,Tipo de Institucion
+UF,CHL-USD
+Qtd Itens Comprados,Descripcion Proveedor
+Preço Unitário,Region Unidad
+CMED - Preço Regulado,Nombre Proveedor
+Competência CMED,Codigo Moneda
+ Média Ponderada ,Codigo Moneda
