@@ -7,11 +7,23 @@ library(readr)
 library(lubridate)
 #******************
 #Read the purchase files, and the Brazilian Real to US dollar per month conversion
+
+#@begin BRA_Antineoplastics_Transformation
+#@param Antineoplastics @as TerapeuticArea
+#@in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/ @as antineoplastics_files
+#@in ~/RStudio/PAHO/CatalogwPreciosClean.csv @as catalog_file
+#@out ~/RStudio/PAHO/Scrappers/Brasil/<TerapeuticArea>.csv @as output_file
+
 TerapeuticArea<-"Antineoplastics"
 
 files<-list.files(path="~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/")
 toberead<-files[grep(".csv",files)]
 Rea_USD<-read_csv("~/RStudio/PAHO/Scrappers/Brasil/BRL-USD/USD_BRLClean.csv",col_types = cols(X1 = col_skip()) )
+
+#@begin read_data_file
+#@desc read multiple input files in directory and agregate the files into a variable DataProv
+#@in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/ @as antineoplastics_files
+#@out DataProv
 
 DataProv<- read_csv(paste0("~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/",toberead[1]),  col_types = cols(`Qtd Itens Comprados` = col_character()), skip = 2)
 for(i in seq(2, length(toberead))){
@@ -19,17 +31,48 @@ for(i in seq(2, length(toberead))){
   DataProv<-rbind(DataProv,temp)
 }
 
+#@end read_data_file
+
 rm(temp)
 
 #Catalog<-read_excel("~/RStudio/PAHO/Scrappers/Taxonomy.xlsx", sheet = "SF Products")
 
 #Read the master catalog file, and filter for the Therapeutic Area 
+
+#@begin read_catalog_file
+#@desc read input catalog file, assign to variable Catalog
+#@in ~/RStudio/PAHO/CatalogwPreciosClean.csv @as catalog_file
+#@out Catalog
 Catalog<- read_csv("~/RStudio/PAHO/CatalogwPreciosClean.csv",col_types = cols(X1 = col_skip()) )
+#@end read_catalog_file
+
+#@begin to_consider
+#@desc also output catalog to consider which is a filter based on TerapeuticArea
+#@in Catalog
+#@param Antineoplastics @as TerapeuticArea
+#@out toconsider
 toconsider<-Catalog[which(Catalog$`Therapeutic Area`==TerapeuticArea),]
 toconsider<-toconsider%>%
   distinct(`Product Name`, .keep_all = TRUE)
+#@end to_consider
+
+
 #SELECT THE RELEVANT COLUMNS and FILTER OUT ACCESORIES and NUTRITION entries
+
+#@begin dataprov_filtering_1
+#@desc filtering DataProv based on raw data columns and numberings/orders in the file
+#@in DataProv
+#@param c(2:4,6:10,12,14:22)
+#@out DataProvFilter1
 DataProv<-DataProv[,c(2:4,6:10,12,14:22)]
+#@end dataprov_filtering_1
+
+
+#@begin dataprov_filtering_2
+#@desc additional filtering based onvalue on the column
+#@param not(ACESSÓRIO|CANETA|NUTRIÇÃO)
+#@in DataProvFilter1
+#@out DataProvFilter2
 DataProv<-DataProv[!grepl("ACESSÓRIO",DataProv$`Descrição CATMAT`),]
 DataProv<-DataProv[!grepl("CANETA",DataProv$`Descrição CATMAT`),]
 DataProv<-DataProv[!grepl("NUTRIÇÃO",DataProv$`Descrição CATMAT`),]
@@ -49,14 +92,31 @@ DataProv$NomProducto<-NA
 DataProv$NomConcentracion<-NA
 DataProv$Ano<-NA
 DataProv$Metodos<-NA
+#@end dataprov_filtering_2
+
 
 #SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries
+#@begin separate_single_fixed_dose
+#@desc SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries
+#@in DataProvFilter2
+#@out Single
+#@out Falta
+#@out FixedDose
 Single<-DataProv[grepl("DOSAGEM", DataProv$`Descrição CATMAT`) | grepl("CONCENTRAÇÃO", DataProv$`Descrição CATMAT`),]
 Single<-Single[!grepl("\\+",Single$`Descrição CATMAT`),]
 Falta<-DataProv[!grepl("DOSAGEM", DataProv$`Descrição CATMAT`) & !grepl("CONCENTRAÇÃO", DataProv$`Descrição CATMAT`),]
 FixedDose<-DataProv[grepl("\\+",DataProv$`Descrição CATMAT`) & !grepl("\\%",DataProv$`Descrição CATMAT`),]
+#@end separate_single_fixed_dose
 
 #CREATE NEW COLUMNS TO FIND EACH OF THE MOLECULES PRESENT ON THE ENTRIES, PRIMER=FIRST SEGUNDO=SECOND
+#@begin create_new_columns
+#@desc SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries
+#@in Single
+#@in Falta
+#@in FixedDose
+#@out Single.1
+#@out Falta.1
+#@out FixedDose.1
 Single$Primer<-NA
 Falta$Primer<-NA
 FixedDose$Primer<-NA
@@ -69,6 +129,8 @@ Falta$Concentracion1<-NA
 Falta$Concentracion2<-NA
 FixedDose$Concentracion1<-NA
 FixedDose$Concentracion2<-NA
+
+
 
 for(i in seq(1,nrow(Single))){
   Single$Primer[i]<-unlist(str_split(Single$`Descrição CATMAT`[i], ","))[1]
@@ -91,10 +153,24 @@ Falta$Concentracion1<-50
 FixedDose$Segundo<-str_remove_all(FixedDose$Segundo,"COM")
 FixedDose$Segundo<-str_replace_all(FixedDose$Segundo,"_"," ")
 FixedDose$Segundo<-str_remove_all(FixedDose$Segundo," ")
+#@end create_new_columns
 
+#@@begin create_single_nom
+#@desc Single table for Primer and Concentraction1
+#@in Single.1
+#@out SingleNom
 SingleNom<-Single[,c("Primer","Concentracion1")]
 SingleNom$Distance<-NA
 stringdist(DataProv$NomProducto[i],DataProv$NomCatalog[i])
+#@@end create_single_nom
+
+
+#@begin join_single_fixed_dose
+#@desc JOIN SINGLE AND FIXED DOSE ENTRIES
+#@in Single.1
+#@in FixedDose.1
+#@in toconsider
+#@out DatosBr
 
 test<-FixedDose%>%
   distinct(`Descrição CATMAT`, .keep_all = TRUE)%>%
@@ -153,6 +229,13 @@ for(i in seq(1,nrow(DatosBr))){
     }
   }
 }
+#@end join_single_fixed_dose
+
+
+#@begin datosbr_exceptions
+#@desc ADD EXCEPTIONS
+#@in DatosBr
+#@out DatosBr.1
 #ADD EXCEPTIONS
 DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="CISPLATINA, CONCENTRAÇÃO:1 MG/ML, FORMA FARMACEUTICA:SOLUÇÃO INJETÁVEL")]<-"CISPLATIN 50 MG, POWDER FOR INJECTION, 50 ML VIAL, 1X1"
 DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="RITUXIMABE, DOSAGEM:10MG/ML, INDICAÇÃO:SOLUÇÃO INJETÁVEL"&
@@ -162,6 +245,7 @@ DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="RITUXIMABE, DOSAGEM:10M
 DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="DOXORRUBICINA CLORIDRATO, CONCENTRAÇÃO:2 MG/ML, FORMA FARMACÊUTICA:SOLUÇÃO INJETÁVEL")]<-"DOXORUBICIN 50 MG (HYDROCHLORIDE), POWDER FOR INJECTION, 25 ML VIAL, 1X1"
 DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="TRASTUZUMABE, CONCENTRAÇÃO:440 MG, FORMA FARMACÊUTICA:PÓ LIOFILO INJETÁVEL")]<-"TRASTUZUMAB 420 MG, POWDER FOR INJECTION, 20 ML VIAL, 1X1"
 DatosBr$NomCatalog[which(DatosBr$`Descrição CATMAT`=="TRASTUZUMABE, CONCENTRAÇÃO:120 MG/ML, FORMA FARMACÊUTICA:SOLUÇÃO INJETÁVEL")]<-"TRASTUZUMAB 150 MG, POWDER FOR INJECTION, 7.2 ML VIAL, 1X1"
+#@end datosbr_exceptions
 
 
 #CHECK
@@ -171,6 +255,10 @@ test<-DatosBr%>%
 
 
 
+#@begin finalize_datos_br
+#@in toconsider
+#@in DatosBr.1
+#@out DatosBrFinal
 priceconsider<-toconsider[,c(1,2,6,7,9)]
 
 DatosBrFinal<-DatosBr%>%
@@ -185,9 +273,15 @@ DatosBrFinal$`Qtd Itens Comprados`<-as.numeric(str_replace_all(DatosBrFinal$`Qtd
 DatosBrFinal<-DatosBrFinal%>%
   left_join(Rea_USD, by=c("Mes","Ano"))
 DatosBrFinal$`Price USD`<-DatosBrFinal$`Preço Unitário`/DatosBrFinal$Precio
+#@end finalize_datos_br
+
 
 ################################################################################
 #ADDING TO THE FINAL FORMAT
+#@begin finalize_data
+#@in DatosBrFinal
+#@out FinalData
+#@out  ~/RStudio/PAHO/Scrappers/Brasil/<TerapeuticArea>.csv @as output_file
 namescols<-c("Country Code", "Entity", "Entity Type","Punto de Entrega", "Mecanismo de Compra", "Programa","Region", "Therapeutic Area", 
              "Generic Product Name","Presentación","Genérico","Subunits per Unit","Catalog Name","Supplier","Manufacturer",
              "Purchase Date","Purchase Year","Total Amount","Unit Quantity","Min Unit Price USD", "PAHO Min Unit Price USD",
@@ -224,3 +318,7 @@ FinalData$Presentación<-DatosBrFinal$` Unidade de Fornecimento `
 filename<-paste0("~/RStudio/PAHO/Scrappers/Brasil/",TerapeuticArea,".csv")
 write.csv(FinalData, filename)
 #**********************************************************************
+#@end finalize_data
+
+
+#@end BRA_Antineoplastics_Transformation
