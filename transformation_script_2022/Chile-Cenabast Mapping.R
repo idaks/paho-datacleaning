@@ -1,33 +1,107 @@
+#@begin ChileProcessing
+
 library(readxl)
 library(stringr)
 library(stringdist)
 library(dplyr)
 library(readr)
+
+#@begin read_entry_files
+#@desc Read the Entry files, the full database and the Taxonomy (the Catalog)
+#@in CHL_Cenabast_Filtered_20-22.xlsx
+#@out CHL
 #Read the Entry files, the full database and the Taxonomy (the Catalog)
 CHL<- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/CHL Cenabast Filtered 20-22.xlsx")
+#@end read_entry_files
+
+#@begin filter_chl
+#@in CHL
+#@out CHL.1
 CHL<-CHL[which(CHL$Proveedor!="PAN AMERICAN HEALTH ORGANIZATION"),]
+#@end filter_chl
+
+#@begin read_price_database
+#@in PriceDataBase.xlsx
+#@out PriceDataBase
 PriceDataBase <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/PriceDataBase.xlsx")
+#@end read_price_database
+
+#@begin read_price_2019
+#@in Prices_2019-2021.xlsx
+#@out Prices_2019_2021
 Prices_2019_2021 <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/Prices 2019-2021.xlsx")
 Prices_2019_2021<-Prices_2019_2021[!is.na(Prices_2019_2021$`Product Name`) & !is.na(Prices_2019_2021$`Min Unit Cost`),c(4,8)]
+#@end read_price_2019
+
+#@begin read_price_taxonomy
+#@in Taxonomy.xlsx
+#@out Taxonomy
 Taxonomy <- read_excel("~/RStudio/PAHO/Scrappers/Taxonomy.xlsx",sheet = "SF Products")
+#@end read_price_taxonomy
+
+
+#@begin combined_chl
+#@in CHL.1
+#@in PriceDataBase
+#@out CHLFinal
 CHLFinal<-as.data.frame(matrix(nrow=nrow(CHL),ncol=ncol(PriceDataBase)))
 names(CHLFinal)<-names(PriceDataBase)
+#@end combined_chl
+
+
 ###############Catalogo
 #Generate the catalog
 SingleDose<-CHL$`Nombre producto genérico`[grepl("\\/",CHL$`Nombre producto genérico`)]
 #Catalog<- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/Prices 2019-2021.xlsx")
+
+
+#@begin read_catalog
+#@in New_Catalog_Products.xlsx
+#@out NewEntries
 NewEntries <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/New Catalog Products.xlsx")
+#@end read_catalog
+
+#@begin combined_new_entries
+#@in NewEntries
+#@in Taxonomy
+#@out NewEntries2
 NewEntries2<-as.data.frame(matrix(nrow=nrow(NewEntries),ncol=ncol(Taxonomy)))
 names(NewEntries2)<-names(Taxonomy)
 NewEntries2$`Product Name`<-NewEntries$`Catalog Name`
 NewEntries2$`Therapeutic Area`<-NewEntries$`Therapeutic Area`
+#@end combined_new_entries
+
+#@begin processed_catalog
+#@in NewEntries2
+#@in Taxonomy
+#@out Catalog
 Catalog<-rbind(Taxonomy,NewEntries2)
 Catalog<-Catalog[(!grepl("Kit",Catalog$`Product Name`,ignore.case = TRUE)) & !is.na(Catalog$`Product Name`),]
+#@end processed_catalog
+
 rm(Taxonomy, NewEntries, NewEntries2)
+
+#@begin catalog_join_prices_2019
+#@in Catalog
+#@in Prices_2019_2021
+#@out Catalog.1
 Catalog<-Catalog%>%
   left_join(Prices_2019_2021, by="Product Name")
+#@end catalog_join_prices_2019
+
+#@begin filter_fixed_dose_catalog
+#@in Catalog.1
+#@out FixedDoseCatalog
 FixedDoseCatalog<-Catalog[grepl("\\+",Catalog$`Product Name`),]
+#@end filter_fixed_dose_catalog
+
+#@begin filter_single_dose_catalog
+#@in Catalog.1
+#@out SingleDoseCatalog
 SingleDoseCatalog<-Catalog[!grepl("\\+",Catalog$`Product Name`),]
+#@end filter_single_dose_catalog
+
+
 FixedDoseCatalog$Mol1<-NA
 FixedDoseCatalog$Con1<-NA
 FixedDoseCatalog$Mol2<-NA
@@ -48,6 +122,7 @@ for(i in seq(1,nrow(FixedDoseCatalog))){
   FixedDoseCatalog$Mol4[i]<-unlist(strsplit(unlist(strsplit(Product,"\\+"))[4]," "))[2]
   FixedDoseCatalog$Con4[i]<-unlist(strsplit(unlist(strsplit(Product,"\\+"))[4]," "))[3]
 }
+
 
 Catalog$Mol1<-NA
 Catalog$Con1<-NA
@@ -104,6 +179,9 @@ Catalog$Con2[which(Catalog$`Product Name`=="DOCETAXEL 40 MG/ML + SOLVENT 6 ML, S
 
 
 
+#@begin prepare_chlmap
+#@in CHL.1
+#@out CHLMAP
 #############MAPEO
 #SELECT THE RELEVANT COLUMNS
 CHLMAP<-CHL[,c(8,11)]
@@ -121,6 +199,9 @@ CHLMAP$`Nombre producto genérico`<-str_replace_all(CHLMAP$`Nombre producto gen�
 CHLMAP$`Nombre producto genérico`<-str_replace_all(CHLMAP$`Nombre producto genérico`,"TEN ALA","TENOFOVIR")
 CHLMAP$`Nombre producto genérico`<-str_replace_all(CHLMAP$`Nombre producto genérico`,"IMIPENEM-CILASTATINA","IMIPENEM/CILASTATINA")
 CHLMAP$`Nombre producto genérico`<-str_replace_all(CHLMAP$`Nombre producto genérico`,"CICLOSPORINA ORAL","CICLOSPORINA")
+
+#@end prepare_chlmap
+
 
 #SEPARATE THE CHILE ENTRIES IN ITS SIMPLEST FORM (SINGLE MOLECULE AND CONCENTRATION)
 
@@ -344,12 +425,24 @@ CHLMAP$CatalogName[CHLMAP$`Nombre producto genérico`=="AMOXICIL/CLAVULAN 875/12
 CHLMAP$CatalogName[CHLMAP$`Nombre producto genérico`=="AMOXIC/CLAVULAN 500/125 MG CP/CM/CM REC"]<-"AMOXICILLIN 500 MG + CLAVULANIC ACID 125 MG, TABLET, BLISTER, 10X10"
 
 
+#@begin prepare_Therapeutic
+#@in Catalog.1
+#@out Therapeutic
 Therapeutic<-Catalog[,c(3,5)]%>%
   distinct(`Product Name`, .keep_all = TRUE)
+#@end prepare_Therapeutic
 
+
+#@begin prepare_chlmap2
+#@in CHLMAP
+#@in Prices_2019_2021
+#@in Therapeutic
+#@out CHLMAP2
 CHLMAP2<-CHLMAP%>%
   left_join(Prices_2019_2021, by=c("CatalogName"="Product Name"))%>%
   left_join(Therapeutic, by=c("CatalogName"="Product Name"))
+#@end prepare_chlmap2
+
 
 test<-CHLMAP2%>%
   filter(is.na(CatalogName))%>%
@@ -359,8 +452,21 @@ test<-CHLMAP2%>%
 
 ####### TO CATALOG
 #TRANSFORM IT TO THE FINAL DATABASE FORMAT
+
+#@begin read_price_database_mar_31
+#@in PriceDataBaseMar31.xlsx
+#@out PriceDataBase.1
 PriceDataBase <- read_excel("~/RStudio/PAHO/PriceDataBaseMar31.xlsx")
+#@end read_price_database_mar_31
+
 PriceDataBase<-PriceDataBase[,c(2:ncol(PriceDataBase))]
+
+#@begin process_FinalCenabast
+#@in CHLMAP
+#@in PriceDataBase.1
+#@in CHLMAP2
+#@in CHL.1
+#@out FinalCenabast
 FinalCenabast<-as.data.frame(matrix(nrow=nrow(CHLMAP),ncol=ncol(PriceDataBase)))
 names(FinalCenabast)<-names(PriceDataBase)
 FinalCenabast$`Country Code`<-"CHL"
@@ -380,14 +486,33 @@ FinalCenabast$`Total Amount`<-CHL$`Monto total`
 FinalCenabast$`Unit Quantity`<-CHL$`Cantidad unitaria`
 FinalCenabast$`Min Unit Price USD`<-as.numeric(CHL$`Precio unitario`)/as.numeric(CHLMAP$Subunits)
 FinalCenabast$`PAHO Min Unit Price USD`<-CHLMAP2$`Min Unit Cost`
+#@end process_FinalCenabast
+
 
 write.csv(FinalCenabast,"~/RStudio/PAHO/Scrappers/Chile/CenabastMar2022.csv" )
 #########Municipalidades
 
+#@begin read_chl_3
+#@in Municipalidades.xlsx
+#@out CHL3
 CHL3 <-read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Municipalidades.xlsx", sheet = "CHL Data (clean)", col_types = c("numeric", "numeric", "text", "numeric", "text", "text", "text", "numeric", "numeric", "date", "text", "numeric", "text", "text", "text", "text", "text", "text","text", "text", "text", "numeric","text", "numeric", "text", "numeric", "numeric", "numeric", "text", "numeric","numeric", "numeric", "numeric", "numeric", "text", "numeric", "numeric", "numeric", "numeric", "text", "numeric","numeric", "numeric", "numeric", "numeric"))
+#@end read_chl_3
 
+#@begin prepare_chl32
+#@in CHL3
+#@in Therapeutic
+#@out CHL32
 CHL32<-CHL3%>%
   left_join(Therapeutic, by=c("CATALOG NAME"="Product Name"))
+#@end prepare_chl32
+
+
+#@begin prepare_Municipalidades_data
+#@in CHL3
+#@in PriceDataBase.1
+#@in CHL32
+#@out temp_Municipalidades
+
 #************Municipalidades***************
 temp<-as.data.frame(matrix(nrow=nrow(CHL3),ncol=ncol(PriceDataBase)))
 names(temp)<-names(PriceDataBase)
@@ -410,20 +535,34 @@ temp$`Subunits per Unit`<-1
 temp$`Unit Quantity`<-CHL3$`Cantidad Adjudicada`
 temp$`Min Unit Price USD`<-CHL3$`$ Unit USD`
 temp$`PAHO Min Unit Price USD`<-CHL3$`PAHO unit Price`
+#@end prepare_Municipalidades_data
 
 write.csv(temp,"~/RStudio/PAHO/Scrappers/Chile/Municipalidades.csv" )
 
-
+#@begin prepare_chlfinal
+#@in FinalCenabast
+#@in temp_Municipalidades
+#@out CHLFinal.1
 CHLFinal<-rbind(FinalCenabast,temp)
+#@end prepare_chlfinal
+
 
 ###############################3
 #DONT USE AFTER THIS LINE
 #################################
+#@begin read_LEISHMANIASIS
+#@in LEISHMANIASIS_Price_Analysis.xlsx
+#@out LE
 LE<-read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/LEISH/LEISHMANIASIS Price Analysis.xlsx", sheet = "Data", col_types = c("text","text", "text", "text", "text", "numeric", "text", "text", "numeric", "text", "text", "text", "text", "text", "text","numeric", "numeric", "numeric","numeric", "text", "text")) 
 LE<-LE[LE$Country=="CHL",]
 LE<-LE[LE$`Unit Quantity`!=1266,]
 LE<-LE[LE$`Unit Quantity`!=2215,]
+#@end read_LEISHMANIASIS
 
+#@begin prepare_LEI
+#@in LE
+#@in PriceDataBase.1
+#@out LEI
 LEI<-as.data.frame(matrix(nrow=nrow(LE),ncol=ncol(PriceDataBase)))
 names(LEI)<-names(PriceDataBase)
 LEI$`Country Code`<-LE$Country
@@ -444,11 +583,26 @@ LEI$`Min Unit Price USD`<-LE$`Unit Price USD (minimum unit)`
 LEI$`PAHO Min Unit Price USD`<-LE$`PAHO Unit price (minimum unit)`
 LEI$Patent<-LE$`Patent?`
 LEI$Observaciones<-LE$Observaciones
+#@end prepare_LEI
 write.csv(LEI,"~/RStudio/PAHO/Scrappers/Chile/LEISH.csv" )
 
-
+#@begin combined_lei_chlfinal
+#@in CHLFinal.1
+#@in LEI
+#@out CHLFinal.2
 CHLFinal<-rbind(CHLFinal,LEI)
+#@end combined_lei_chlfinal
+
+#@begin read_heartsdata
+#@in Hearts_data_CHL.xlsx
+#@out CHL2
 CHL2 <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Hearts data CHL.xlsx", col_types = c("text", "text", "text", "text", "text", "text", "numeric", "text", "text", "text", "text", "text", "numeric", "numeric", "numeric", "numeric", "numeric", "text", "text"))
+#@end read_heartsdata
+
+#@begin process_chl2
+#@in CHL2
+#@in PriceDataBase.1
+#@out temp_CHL2
 temp<-as.data.frame(matrix(nrow=nrow(CHL2),ncol=ncol(PriceDataBase)))
 names(temp)<-names(PriceDataBase)
 temp$`Country Code`<-"CHL"
@@ -466,13 +620,20 @@ temp$`PAHO Min Unit Price USD`<-CHL2$`PAHO Unit price (minimum unit)`
 temp$Patent<-CHL2$`Patent?`
 temp$Genérico<-CHL2$`Patent?`
 temp$Genérico[grepl("Patente",temp$Genérico)]<-NA
+#@end process_chl2
+
 write.csv(temp,"~/RStudio/PAHO/Scrappers/Chile/Hearts.csv" )
 
-
+#@begin combined_chlfinal_chl2
+#@in CHLFinal.2
+#@in temp_CHL2
+#@out CHLFinal.3
 CHLFinal<-rbind(CHLFinal,temp)
 CHLFinal$Observaciones<-"SDC"
 CHLFinal$Observaciones[grepl("\\+",CHLFinal$`Catalog Name`)]<-"FDC"
 CHLFinal$Observaciones[grepl("insu",CHLFinal$`Country Product Name`, ignore.case = TRUE)]<-"INSULIN"
+#@end combined_chlfinal_chl2
+
 
 setwd("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB")
 xlsx::write.xlsx2(CHLFinal,"ChileFinal.xlsx")
@@ -497,4 +658,4 @@ test<-CHLMAP%>%
 
 ########
 
-
+#@end ChileProcessing
