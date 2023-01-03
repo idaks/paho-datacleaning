@@ -1,3 +1,9 @@
+#@begin PeruProcessing
+#@in Prices_2019-2021.xlsx
+#@in Scrappers/Perú/*
+#@in Taxonomy.xlsx
+#@out PeruAntineoPlasticsClean.csv
+
 library(dplyr)
 library(XLConnect)
 library(readxl)
@@ -22,15 +28,33 @@ anos<-c(2019,2020,2021)
 files<-list.files(path="~/RStudio/PAHO/Scrappers/Perú")
 toberead<-files[grep("antineoplastics",files)]
 SolaUSD<-3.77 #Precio Promedio anual
+#@begin read_prices
+#@in Prices_2019-2021.xlsx
+#@out Precios
 Precios<- read_excel("~/RStudio/PAHO/Prices 2019-2021.xlsx")
+#@end read_prices
+
 Precios<-Precios[,c(4,8)]
+#@begin read_perumed
+#@in Scrappers/Perú/*
+#@out PeruMed
 PeruMed<- read_excel(paste0("~/RStudio/PAHO/Scrappers/Perú/",toberead[1]), skip=1)
 for(i in seq(2, length(toberead))){
   temp<-read_excel(paste0("~/RStudio/PAHO/Scrappers/Perú/",toberead[i]), skip=1)
   PeruMed<-rbind(PeruMed,temp)
 }
+#@end read_perumed
+
 #READ THE CATALOG AND FILTER THE THERAPEUTIC AREA
+#@begin read_catalog
+#@in Taxonomy.xlsx
+#@out Catalog
 Catalog<-read_excel("~/RStudio/PAHO/Scrappers/Taxonomy.xlsx", sheet = "SF Products")
+#@end read_catalog
+
+#@begin filter_datos
+#@in Catalog
+#@out DatosFinal
 toconsider<-Catalog[which(Catalog$`Therapeutic Area`=="Antineoplastics"),]
 DatosFinal<-as.data.frame(matrix(nrow=nrow(toconsider),ncol=8))
 names(DatosFinal)<-c("Nombre","Concentracion","Presentacion","Cuarto","Quinto","Taxonomy","CatalogName","ConcentracionNum")
@@ -52,7 +76,13 @@ for(i in seq(1, nrow(toconsider))){
   DatosFinal$CatalogName[i]<-toconsider$`Product Name`[i]
   DatosFinal$ConcentracionNum[i]<-unlist(str_split(DatosFinal$Concentracion[i]," "))[1]
 }
+#@end read_catalog
 
+
+#@begin filter_perumed
+#@in PeruMed
+#@in DatosFinal
+#@out PeruMed.1
 PeruMed$NomCatalog<-NA
 PeruMed$Dist<-NA
 PeruMed$NomProducto<-NA
@@ -107,6 +137,13 @@ for(i in seq(1,nrow(PeruMed))){
     }
   }
 }
+#@end filter_perumed
+
+#@begin merge_perumed_precios
+#@in PeruMed.1
+#@in Precios
+#@out PeruMed.2
+
 #PeruMed2<-PeruMed[c(1:4),c(23,14)]
 Precios2<-Precios%>%
   distinct(`Product Name`, .keep_all = TRUE)
@@ -118,6 +155,13 @@ PeruMed<-left_join(PeruMed,Precios2, by=c("CatalogEntry"="Product Name"))
 Test<-PeruMed%>%
   distinct(Producto, .keep_all = TRUE)%>%
   dplyr::select(Producto, CatalogEntry)
+  
+#@end merge_perumed_precios
+
+
+#@begin create_final_data
+#@in PeruMed.2
+#@out FinalData
 
 #write.csv(PeruMed,"~/RStudio/PAHO/Scrappers/Perú/PeruClean.csv")
 namescols<-c("Country Code", "Entity", "Entity Type","Punto de Entrega", "Mecanismo de Compra", "Programa","Region", "Therapeutic Area", 
@@ -142,5 +186,12 @@ FinalData$`Punto de Entrega`<-PeruMed$`Punto de Entrega`
 FinalData$`Mecanismo de Compra`<-PeruMed$Metodos
 FinalData<-FinalData%>%
   filter(`Purchase Year` %in% anos)
-write.csv(FinalData,"~/RStudio/PAHO/Scrappers/Perú/PeruAntineoPlasticsClean.csv")
+#@end create_final_data
 
+#@begin write_final_data
+#@in FinalData
+#@out PeruAntineoPlasticsClean.csv
+write.csv(FinalData,"~/RStudio/PAHO/Scrappers/Perú/PeruAntineoPlasticsClean.csv")
+#@end write_final_data
+
+#@end PeruProcessing
