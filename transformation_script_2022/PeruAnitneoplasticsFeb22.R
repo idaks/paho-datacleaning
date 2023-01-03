@@ -1,8 +1,8 @@
 #@begin PeruProcessing
-#@in Prices_2019-2021.xlsx
-#@in Scrappers/Perú/*
-#@in Taxonomy.xlsx
-#@out PeruAntineoPlasticsClean.csv
+#@in Prices_2019_2021_File @URI file:Prices_2019-2021.xlsx
+#@in Peru_Scrapped_Files @URI file:Scrappers/Perú/*
+#@in Taxonomy_File @URI file:Taxonomy.xlsx
+#@out PeruAntineoPlasticsClean_File @URI file:PeruAntineoPlasticsClean.csv
 
 library(dplyr)
 library(XLConnect)
@@ -29,14 +29,14 @@ files<-list.files(path="~/RStudio/PAHO/Scrappers/Perú")
 toberead<-files[grep("antineoplastics",files)]
 SolaUSD<-3.77 #Precio Promedio anual
 #@begin read_prices
-#@in Prices_2019-2021.xlsx
+#@in Prices_2019_2021_File @URI file:Prices_2019-2021.xlsx
 #@out Precios
 Precios<- read_excel("~/RStudio/PAHO/Prices 2019-2021.xlsx")
 #@end read_prices
 
 Precios<-Precios[,c(4,8)]
 #@begin read_perumed
-#@in Scrappers/Perú/*
+#@in Peru_Scrapped_Files @URI file:Scrappers/Perú/*
 #@out PeruMed
 PeruMed<- read_excel(paste0("~/RStudio/PAHO/Scrappers/Perú/",toberead[1]), skip=1)
 for(i in seq(2, length(toberead))){
@@ -47,7 +47,7 @@ for(i in seq(2, length(toberead))){
 
 #READ THE CATALOG AND FILTER THE THERAPEUTIC AREA
 #@begin read_catalog
-#@in Taxonomy.xlsx
+#@in Taxonomy_File @URI file:Taxonomy.xlsx
 #@out Catalog
 Catalog<-read_excel("~/RStudio/PAHO/Scrappers/Taxonomy.xlsx", sheet = "SF Products")
 #@end read_catalog
@@ -190,7 +190,7 @@ FinalData<-FinalData%>%
 
 #@begin write_final_data
 #@in FinalData
-#@out PeruAntineoPlasticsClean.csv
+#@out PeruAntineoPlasticsClean_File @URI file:PeruAntineoPlasticsClean.csv
 write.csv(FinalData,"~/RStudio/PAHO/Scrappers/Perú/PeruAntineoPlasticsClean.csv")
 #@end write_final_data
 
