@@ -9,20 +9,26 @@ library(lubridate)
 #Read the purchase files, and the Brazilian Real to US dollar per month conversion
 
 #@begin BRA_Antineoplastics_Transformation
-#@param Antineoplastics @as TerapeuticArea
-#@in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/ @as antineoplastics_files
-#@in ~/RStudio/PAHO/CatalogwPreciosClean.csv @as catalog_file
-#@out ~/RStudio/PAHO/Scrappers/Brasil/<TerapeuticArea>.csv @as output_file
+#@in antineoplastics_files @URI file:~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*
+#@in usd_clean @URI file:USD_BRLClean.csv
+#@in catalog_file @URI file:~/RStudio/PAHO/CatalogwPreciosClean.csv 
+#@out output_file
 
 TerapeuticArea<-"Antineoplastics"
 
 files<-list.files(path="~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/")
 toberead<-files[grep(".csv",files)]
+
+#@begin read_usd_brlclean
+#@in usd_clean @URI file:USD_BRLClean.csv
+#@out Rea_USD
 Rea_USD<-read_csv("~/RStudio/PAHO/Scrappers/Brasil/BRL-USD/USD_BRLClean.csv",col_types = cols(X1 = col_skip()) )
+#@end read_usd_brlclean
+
 
 #@begin read_data_file
 #@desc read multiple input files in directory and agregate the files into a variable DataProv
-#@in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/ @as antineoplastics_files
+#@in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/* @as antineoplastics_files
 #@out DataProv
 
 DataProv<- read_csv(paste0("~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/",toberead[1]),  col_types = cols(`Qtd Itens Comprados` = col_character()), skip = 2)
@@ -32,6 +38,8 @@ for(i in seq(2, length(toberead))){
 }
 
 #@end read_data_file
+
+rm(temp)
 
 rm(temp)
 
@@ -258,6 +266,7 @@ test<-DatosBr%>%
 #@begin finalize_datos_br
 #@in toconsider
 #@in DatosBr.1
+#@in Rea_USD
 #@out DatosBrFinal
 priceconsider<-toconsider[,c(1,2,6,7,9)]
 
@@ -281,7 +290,6 @@ DatosBrFinal$`Price USD`<-DatosBrFinal$`Preço Unitário`/DatosBrFinal$Precio
 #@begin finalize_data
 #@in DatosBrFinal
 #@out FinalData
-#@out  ~/RStudio/PAHO/Scrappers/Brasil/<TerapeuticArea>.csv @as output_file
 namescols<-c("Country Code", "Entity", "Entity Type","Punto de Entrega", "Mecanismo de Compra", "Programa","Region", "Therapeutic Area", 
              "Generic Product Name","Presentación","Genérico","Subunits per Unit","Catalog Name","Supplier","Manufacturer",
              "Purchase Date","Purchase Year","Total Amount","Unit Quantity","Min Unit Price USD", "PAHO Min Unit Price USD",
@@ -316,9 +324,15 @@ FinalData$`Purchase Date`<- DatosBrFinal$` Data Compra `
 FinalData$Genérico<-DatosBrFinal$Genérico
 FinalData$Presentación<-DatosBrFinal$` Unidade de Fornecimento `
 filename<-paste0("~/RStudio/PAHO/Scrappers/Brasil/",TerapeuticArea,".csv")
-write.csv(FinalData, filename)
-#**********************************************************************
 #@end finalize_data
+
+#@begin write_final_data
+#@in FinalData
+#@out output_file @URI file:~/RStudio/PAHO/Scrappers/Brasil/\<TerapeuticArea\>.csv
+write.csv(FinalData, filename)
+#@end write_final_data
+
+#**********************************************************************
 
 
 #@end BRA_Antineoplastics_Transformation
