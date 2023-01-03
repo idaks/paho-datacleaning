@@ -1,4 +1,17 @@
 #@begin ChileProcessing
+#@in CHL_Cenabast_Filtered @URI file:CHL_Cenabast_Filtered_20-22.xlsx
+#@in PriceDataBaseFile @URI file:PriceDataBase.xlsx
+#@in Prices_2019_2021_File @URI file:Prices_2019-2021.xlsx
+#@in TaxonomyFile @URI file:Taxonomy.xlsx
+#@in New_Catalog_Products_File @URI  New_Catalog_Products.xlsx
+#@in Municipalidades_File @URI Municipalidades.xlsx
+#@in LEISHMANIASIS_File @URI LEISHMANIASIS_Price_Analysis.xlsx
+#@in PriceDataBaseMar31_File @URI file:PriceDataBaseMar31.xlsx
+#@in Hearts_data_File @URI file:Hearts_data_CHL.xlsx
+#@out ChileFinal_File as @URI file:ChileFinal.xlsx
+
+
+
 
 library(readxl)
 library(stringr)
@@ -8,7 +21,7 @@ library(readr)
 
 #@begin read_entry_files
 #@desc Read the Entry files, the full database and the Taxonomy (the Catalog)
-#@in CHL_Cenabast_Filtered_20-22.xlsx
+#@in CHL_Cenabast_Filtered
 #@out CHL
 #Read the Entry files, the full database and the Taxonomy (the Catalog)
 CHL<- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/CHL Cenabast Filtered 20-22.xlsx")
@@ -21,20 +34,20 @@ CHL<-CHL[which(CHL$Proveedor!="PAN AMERICAN HEALTH ORGANIZATION"),]
 #@end filter_chl
 
 #@begin read_price_database
-#@in PriceDataBase.xlsx
+#@in PriceDataBaseFile @URI PriceDataBase.xlsx
 #@out PriceDataBase
 PriceDataBase <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/PriceDataBase.xlsx")
 #@end read_price_database
 
 #@begin read_price_2019
-#@in Prices_2019-2021.xlsx
+#@in Prices_2019_2021_File
 #@out Prices_2019_2021
 Prices_2019_2021 <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/Prices 2019-2021.xlsx")
 Prices_2019_2021<-Prices_2019_2021[!is.na(Prices_2019_2021$`Product Name`) & !is.na(Prices_2019_2021$`Min Unit Cost`),c(4,8)]
 #@end read_price_2019
 
 #@begin read_price_taxonomy
-#@in Taxonomy.xlsx
+#@in TaxonomyFile @URI file:Taxonomy.xlsx
 #@out Taxonomy
 Taxonomy <- read_excel("~/RStudio/PAHO/Scrappers/Taxonomy.xlsx",sheet = "SF Products")
 #@end read_price_taxonomy
@@ -56,7 +69,7 @@ SingleDose<-CHL$`Nombre producto genérico`[grepl("\\/",CHL$`Nombre producto gen
 
 
 #@begin read_catalog
-#@in New_Catalog_Products.xlsx
+#@in New_Catalog_Products_File @URI  file:Price Analysis/PriceDB/New Catalog Products.xlsx
 #@out NewEntries
 NewEntries <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/New Catalog Products.xlsx")
 #@end read_catalog
@@ -454,7 +467,7 @@ test<-CHLMAP2%>%
 #TRANSFORM IT TO THE FINAL DATABASE FORMAT
 
 #@begin read_price_database_mar_31
-#@in PriceDataBaseMar31.xlsx
+#@in PriceDataBaseMar31_File @URI file:PriceDataBaseMar31.xlsx
 #@out PriceDataBase.1
 PriceDataBase <- read_excel("~/RStudio/PAHO/PriceDataBaseMar31.xlsx")
 #@end read_price_database_mar_31
@@ -493,7 +506,7 @@ write.csv(FinalCenabast,"~/RStudio/PAHO/Scrappers/Chile/CenabastMar2022.csv" )
 #########Municipalidades
 
 #@begin read_chl_3
-#@in Municipalidades.xlsx
+#@in Municipalidades_File @URI Municipalidades.xlsx
 #@out CHL3
 CHL3 <-read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Municipalidades.xlsx", sheet = "CHL Data (clean)", col_types = c("numeric", "numeric", "text", "numeric", "text", "text", "text", "numeric", "numeric", "date", "text", "numeric", "text", "text", "text", "text", "text", "text","text", "text", "text", "numeric","text", "numeric", "text", "numeric", "numeric", "numeric", "text", "numeric","numeric", "numeric", "numeric", "numeric", "text", "numeric", "numeric", "numeric", "numeric", "text", "numeric","numeric", "numeric", "numeric", "numeric"))
 #@end read_chl_3
@@ -551,7 +564,7 @@ CHLFinal<-rbind(FinalCenabast,temp)
 #DONT USE AFTER THIS LINE
 #################################
 #@begin read_LEISHMANIASIS
-#@in LEISHMANIASIS_Price_Analysis.xlsx
+#@in LEISHMANIASIS_File @URI LEISHMANIASIS_Price_Analysis.xlsx
 #@out LE
 LE<-read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/LEISH/LEISHMANIASIS Price Analysis.xlsx", sheet = "Data", col_types = c("text","text", "text", "text", "text", "numeric", "text", "text", "numeric", "text", "text", "text", "text", "text", "text","numeric", "numeric", "numeric","numeric", "text", "text")) 
 LE<-LE[LE$Country=="CHL",]
@@ -594,7 +607,7 @@ CHLFinal<-rbind(CHLFinal,LEI)
 #@end combined_lei_chlfinal
 
 #@begin read_heartsdata
-#@in Hearts_data_CHL.xlsx
+#@in Hearts_data_File @URI file:Hearts_data_CHL.xlsx
 #@out CHL2
 CHL2 <- read_excel("~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Hearts data CHL.xlsx", col_types = c("text", "text", "text", "text", "text", "text", "numeric", "text", "text", "text", "text", "text", "numeric", "numeric", "numeric", "numeric", "numeric", "text", "text"))
 #@end read_heartsdata
@@ -635,8 +648,14 @@ CHLFinal$Observaciones[grepl("insu",CHLFinal$`Country Product Name`, ignore.case
 #@end combined_chlfinal_chl2
 
 
+#@begin write_chile_final
+#@in CHLFinal.3
+#@out ChileFinal_File as @URI ChileFinal.xlsx
+
 setwd("~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB")
 xlsx::write.xlsx2(CHLFinal,"ChileFinal.xlsx")
+#@end write_chile_final
+
 
 PriceDataBaseMAR31 <- read_excel("~/RStudio/PAHO/PriceDataBaseMAR31.xlsx", col_types = c("skip", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "numeric","text", "text", "text", "date", "text", "numeric", "numeric", "numeric", "numeric", "text", "text", "text"))
 
