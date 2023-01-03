@@ -1,0 +1,130 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Helvetica; fontsize=18; labelloc=t
+label=BRA_Antineoplastics_Transformation
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing atomic programs in workflow */
+read_usd_brlclean
+read_data_file [shape=record rankdir=LR label="{<f0> read_data_file |<f1> read multiple input files in directory and agregate the files into a variable DataProv}"];
+read_catalog_file [shape=record rankdir=LR label="{<f0> read_catalog_file |<f1> read input catalog file, assign to variable Catalog}"];
+to_consider [shape=record rankdir=LR label="{<f0> to_consider |<f1> also output catalog to consider which is a filter based on TerapeuticArea}"];
+dataprov_filtering_1 [shape=record rankdir=LR label="{<f0> dataprov_filtering_1 |<f1> filtering DataProv based on raw data columns and numberings/orders in the file}"];
+dataprov_filtering_2 [shape=record rankdir=LR label="{<f0> dataprov_filtering_2 |<f1> additional filtering based onvalue on the column}"];
+separate_single_fixed_dose [shape=record rankdir=LR label="{<f0> separate_single_fixed_dose |<f1> SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries}"];
+create_new_columns [shape=record rankdir=LR label="{<f0> create_new_columns |<f1> SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries}"];
+join_single_fixed_dose [shape=record rankdir=LR label="{<f0> join_single_fixed_dose |<f1> JOIN SINGLE AND FIXED DOSE ENTRIES}"];
+datosbr_exceptions [shape=record rankdir=LR label="{<f0> datosbr_exceptions |<f1> ADD EXCEPTIONS}"];
+finalize_datos_br
+finalize_data
+write_final_data
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+output_file [shape=record rankdir=LR label="{<f0> output_file |<f1> file\:~/RStudio/PAHO/Scrappers/Brasil/\<TerapeuticArea\>.csv}"];
+usd_clean [shape=record rankdir=LR label="{<f0> usd_clean |<f1> file\:USD_BRLClean.csv}"];
+antineoplastics_files [shape=record rankdir=LR label="{<f0> antineoplastics_files |<f1> file\:~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*}"];
+catalog_file [shape=record rankdir=LR label="{<f0> catalog_file |<f1> file\:~/RStudio/PAHO/CatalogwPreciosClean.csv}"];
+Catalog
+DataProv
+DataProvFilter1
+DataProvFilter2
+Single
+Falta
+FixedDose
+"Single.1"
+"FixedDose.1"
+toconsider
+DatosBr
+"DatosBr.1"
+Rea_USD
+DatosBrFinal
+FinalData
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+read_usd_brlclean -> Rea_USD
+usd_clean -> read_usd_brlclean
+read_data_file -> DataProv
+antineoplastics_files -> read_data_file
+read_catalog_file -> Catalog
+catalog_file -> read_catalog_file
+to_consider -> toconsider
+Catalog -> to_consider
+TerapeuticArea -> to_consider
+dataprov_filtering_1 -> DataProvFilter1
+DataProv -> dataprov_filtering_1
+"c(2:4,6:10,12,14:22)" -> dataprov_filtering_1
+dataprov_filtering_2 -> DataProvFilter2
+"not(ACESSÓRIO|CANETA|NUTRIÇÃO)" -> dataprov_filtering_2
+DataProvFilter1 -> dataprov_filtering_2
+separate_single_fixed_dose -> Single
+separate_single_fixed_dose -> Falta
+separate_single_fixed_dose -> FixedDose
+DataProvFilter2 -> separate_single_fixed_dose
+create_new_columns -> "Single.1"
+create_new_columns -> "Falta.1"
+create_new_columns -> "FixedDose.1"
+Single -> create_new_columns
+Falta -> create_new_columns
+FixedDose -> create_new_columns
+join_single_fixed_dose -> DatosBr
+"Single.1" -> join_single_fixed_dose
+"FixedDose.1" -> join_single_fixed_dose
+toconsider -> join_single_fixed_dose
+datosbr_exceptions -> "DatosBr.1"
+DatosBr -> datosbr_exceptions
+finalize_datos_br -> DatosBrFinal
+toconsider -> finalize_datos_br
+"DatosBr.1" -> finalize_datos_br
+Rea_USD -> finalize_datos_br
+finalize_data -> FinalData
+DatosBrFinal -> finalize_data
+write_final_data -> output_file
+FinalData -> write_final_data
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+antineoplastics_files_input_port [label=""]
+usd_clean_input_port [label=""]
+catalog_file_input_port [label=""]
+"Single.1_input_port" [label=""]
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+output_file_output_port [label=""]
+
+/* Edges from input ports to channels */
+antineoplastics_files_input_port -> antineoplastics_files
+usd_clean_input_port -> usd_clean
+catalog_file_input_port -> catalog_file
+"Single.1_input_port" -> "Single.1"
+
+/* Edges from channels to output ports */
+output_file -> output_file_output_port
+
+/* End of top-level graph */
+}

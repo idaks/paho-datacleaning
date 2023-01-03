@@ -1,0 +1,380 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'BRA_Antineoplastics_Transformation', 'BRA_Antineoplastics_Transformation', 1, 91).
+program(2, 'read_usd_brlclean', 'BRA_Antineoplastics_Transformation.read_usd_brlclean', 9, 13).
+program(3, 'read_data_file', 'BRA_Antineoplastics_Transformation.read_data_file', 14, 19).
+program(4, 'read_catalog_file', 'BRA_Antineoplastics_Transformation.read_catalog_file', 20, 25).
+program(5, 'to_consider', 'BRA_Antineoplastics_Transformation.to_consider', 26, 32).
+program(6, 'dataprov_filtering_1', 'BRA_Antineoplastics_Transformation.dataprov_filtering_1', 33, 38).
+program(7, 'dataprov_filtering_2', 'BRA_Antineoplastics_Transformation.dataprov_filtering_2', 39, 44).
+program(8, 'separate_single_fixed_dose', 'BRA_Antineoplastics_Transformation.separate_single_fixed_dose', 45, 51).
+program(9, 'create_new_columns', 'BRA_Antineoplastics_Transformation.create_new_columns', 52, 60).
+program(10, 'join_single_fixed_dose', 'BRA_Antineoplastics_Transformation.join_single_fixed_dose', 64, 70).
+program(11, 'datosbr_exceptions', 'BRA_Antineoplastics_Transformation.datosbr_exceptions', 71, 75).
+program(12, 'finalize_datos_br', 'BRA_Antineoplastics_Transformation.finalize_datos_br', 76, 81).
+program(13, 'finalize_data', 'BRA_Antineoplastics_Transformation.finalize_data', 82, 85).
+program(14, 'write_final_data', 'BRA_Antineoplastics_Transformation.write_final_data', 86, 90).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+has_subprogram(1, 10).
+has_subprogram(1, 11).
+has_subprogram(1, 12).
+has_subprogram(1, 13).
+has_subprogram(1, 14).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'antineoplastics_files', 'BRA_Antineoplastics_Transformation<-antineoplastics_files', 2, 1).
+port(2, 'in', 'usd_clean', 'BRA_Antineoplastics_Transformation<-usd_clean', 4, 2).
+port(3, 'in', 'catalog_file', 'BRA_Antineoplastics_Transformation<-catalog_file', 6, 3).
+port(30, 'in', 'Single.1', 'BRA_Antineoplastics_Transformation<-Single.1', 62, 23).
+port(4, 'out', 'output_file', 'BRA_Antineoplastics_Transformation->output_file', 8, 4).
+port(31, 'out', 'SingleNom', 'BRA_Antineoplastics_Transformation->SingleNom', 63, 24).
+port(5, 'in', 'usd_clean', 'BRA_Antineoplastics_Transformation.read_usd_brlclean<-usd_clean', 10, 5).
+port(6, 'out', 'Rea_USD', 'BRA_Antineoplastics_Transformation.read_usd_brlclean->Rea_USD', 12, 6).
+port(7, 'in', '~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*', 'BRA_Antineoplastics_Transformation.read_data_file<-~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*', 16, 7).
+port(8, 'out', 'DataProv', 'BRA_Antineoplastics_Transformation.read_data_file->DataProv', 18, 8).
+port(9, 'in', '~/RStudio/PAHO/CatalogwPreciosClean.csv', 'BRA_Antineoplastics_Transformation.read_catalog_file<-~/RStudio/PAHO/CatalogwPreciosClean.csv', 22, 9).
+port(10, 'out', 'Catalog', 'BRA_Antineoplastics_Transformation.read_catalog_file->Catalog', 24, 10).
+port(11, 'in', 'Catalog', 'BRA_Antineoplastics_Transformation.to_consider<-Catalog', 28, 10).
+port(12, 'param', 'Antineoplastics', 'BRA_Antineoplastics_Transformation.to_consider<-Antineoplastics', 29, 11).
+port(13, 'out', 'toconsider', 'BRA_Antineoplastics_Transformation.to_consider->toconsider', 31, 12).
+port(14, 'in', 'DataProv', 'BRA_Antineoplastics_Transformation.dataprov_filtering_1<-DataProv', 35, 8).
+port(15, 'param', 'c(2:4,6:10,12,14:22)', 'BRA_Antineoplastics_Transformation.dataprov_filtering_1<-c(2:4,6:10,12,14:22)', 36, 13).
+port(16, 'out', 'DataProvFilter1', 'BRA_Antineoplastics_Transformation.dataprov_filtering_1->DataProvFilter1', 37, 14).
+port(17, 'param', 'not(ACESSÓRIO|CANETA|NUTRIÇÃO)', 'BRA_Antineoplastics_Transformation.dataprov_filtering_2<-not(ACESSÓRIO|CANETA|NUTRIÇÃO)', 41, 15).
+port(18, 'in', 'DataProvFilter1', 'BRA_Antineoplastics_Transformation.dataprov_filtering_2<-DataProvFilter1', 42, 14).
+port(19, 'out', 'DataProvFilter2', 'BRA_Antineoplastics_Transformation.dataprov_filtering_2->DataProvFilter2', 43, 16).
+port(20, 'in', 'DataProvFilter2', 'BRA_Antineoplastics_Transformation.separate_single_fixed_dose<-DataProvFilter2', 47, 16).
+port(21, 'out', 'Single', 'BRA_Antineoplastics_Transformation.separate_single_fixed_dose->Single', 48, 17).
+port(22, 'out', 'Falta', 'BRA_Antineoplastics_Transformation.separate_single_fixed_dose->Falta', 49, 18).
+port(23, 'out', 'FixedDose', 'BRA_Antineoplastics_Transformation.separate_single_fixed_dose->FixedDose', 50, 19).
+port(24, 'in', 'Single', 'BRA_Antineoplastics_Transformation.create_new_columns<-Single', 54, 17).
+port(25, 'in', 'Falta', 'BRA_Antineoplastics_Transformation.create_new_columns<-Falta', 55, 18).
+port(26, 'in', 'FixedDose', 'BRA_Antineoplastics_Transformation.create_new_columns<-FixedDose', 56, 19).
+port(27, 'out', 'Single.1', 'BRA_Antineoplastics_Transformation.create_new_columns->Single.1', 57, 20).
+port(28, 'out', 'Falta.1', 'BRA_Antineoplastics_Transformation.create_new_columns->Falta.1', 58, 21).
+port(29, 'out', 'FixedDose.1', 'BRA_Antineoplastics_Transformation.create_new_columns->FixedDose.1', 59, 22).
+port(32, 'in', 'Single.1', 'BRA_Antineoplastics_Transformation.join_single_fixed_dose<-Single.1', 66, 20).
+port(33, 'in', 'FixedDose.1', 'BRA_Antineoplastics_Transformation.join_single_fixed_dose<-FixedDose.1', 67, 22).
+port(34, 'in', 'toconsider', 'BRA_Antineoplastics_Transformation.join_single_fixed_dose<-toconsider', 68, 12).
+port(35, 'out', 'DatosBr', 'BRA_Antineoplastics_Transformation.join_single_fixed_dose->DatosBr', 69, 25).
+port(36, 'in', 'DatosBr', 'BRA_Antineoplastics_Transformation.datosbr_exceptions<-DatosBr', 73, 25).
+port(37, 'out', 'DatosBr.1', 'BRA_Antineoplastics_Transformation.datosbr_exceptions->DatosBr.1', 74, 26).
+port(38, 'in', 'toconsider', 'BRA_Antineoplastics_Transformation.finalize_datos_br<-toconsider', 77, 12).
+port(39, 'in', 'DatosBr.1', 'BRA_Antineoplastics_Transformation.finalize_datos_br<-DatosBr.1', 78, 26).
+port(40, 'in', 'Rea_USD', 'BRA_Antineoplastics_Transformation.finalize_datos_br<-Rea_USD', 79, 6).
+port(41, 'out', 'DatosBrFinal', 'BRA_Antineoplastics_Transformation.finalize_datos_br->DatosBrFinal', 80, 27).
+port(42, 'in', 'DatosBrFinal', 'BRA_Antineoplastics_Transformation.finalize_data<-DatosBrFinal', 83, 27).
+port(43, 'out', 'FinalData', 'BRA_Antineoplastics_Transformation.finalize_data->FinalData', 84, 28).
+port(44, 'in', 'FinalData', 'BRA_Antineoplastics_Transformation.write_final_data<-FinalData', 87, 28).
+port(45, 'out', 'output_file', 'BRA_Antineoplastics_Transformation.write_final_data->output_file', 88, 29).
+
+% FACT: port_alias(port_id, alias).
+port_alias(7, 'antineoplastics_files').
+port_alias(9, 'catalog_file').
+port_alias(12, 'TerapeuticArea').
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(1, 'file:~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*').
+port_uri_template(2, 'file:USD_BRLClean.csv').
+port_uri_template(3, 'file:~/RStudio/PAHO/CatalogwPreciosClean.csv').
+port_uri_template(5, 'file:USD_BRLClean.csv').
+port_uri_template(45, 'file:~/RStudio/PAHO/Scrappers/Brasil/\<TerapeuticArea\>.csv').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(1, 3).
+has_in_port(1, 30).
+has_in_port(2, 5).
+has_in_port(3, 7).
+has_in_port(4, 9).
+has_in_port(5, 11).
+has_in_port(5, 12).
+has_in_port(6, 14).
+has_in_port(6, 15).
+has_in_port(7, 17).
+has_in_port(7, 18).
+has_in_port(8, 20).
+has_in_port(9, 24).
+has_in_port(9, 25).
+has_in_port(9, 26).
+has_in_port(10, 32).
+has_in_port(10, 33).
+has_in_port(10, 34).
+has_in_port(11, 36).
+has_in_port(12, 38).
+has_in_port(12, 39).
+has_in_port(12, 40).
+has_in_port(13, 42).
+has_in_port(14, 44).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 4).
+has_out_port(1, 31).
+has_out_port(2, 6).
+has_out_port(3, 8).
+has_out_port(4, 10).
+has_out_port(5, 13).
+has_out_port(6, 16).
+has_out_port(7, 19).
+has_out_port(8, 21).
+has_out_port(8, 22).
+has_out_port(8, 23).
+has_out_port(9, 27).
+has_out_port(9, 28).
+has_out_port(9, 29).
+has_out_port(10, 35).
+has_out_port(11, 37).
+has_out_port(12, 41).
+has_out_port(13, 43).
+has_out_port(14, 45).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'antineoplastics_files', '[antineoplastics_files]').
+data(2, 'usd_clean', '[usd_clean]').
+data(3, 'catalog_file', '[catalog_file]').
+data(4, 'output_file', '[output_file]').
+data(23, 'Single.1', '[Single.1]').
+data(24, 'SingleNom', '[SingleNom]').
+data(5, 'usd_clean', 'BRA_Antineoplastics_Transformation[usd_clean]').
+data(6, 'Rea_USD', 'BRA_Antineoplastics_Transformation[Rea_USD]').
+data(7, 'antineoplastics_files', 'BRA_Antineoplastics_Transformation[antineoplastics_files]').
+data(8, 'DataProv', 'BRA_Antineoplastics_Transformation[DataProv]').
+data(9, 'catalog_file', 'BRA_Antineoplastics_Transformation[catalog_file]').
+data(10, 'Catalog', 'BRA_Antineoplastics_Transformation[Catalog]').
+data(11, 'TerapeuticArea', 'BRA_Antineoplastics_Transformation[TerapeuticArea]').
+data(12, 'toconsider', 'BRA_Antineoplastics_Transformation[toconsider]').
+data(13, 'c(2:4,6:10,12,14:22)', 'BRA_Antineoplastics_Transformation[c(2:4,6:10,12,14:22)]').
+data(14, 'DataProvFilter1', 'BRA_Antineoplastics_Transformation[DataProvFilter1]').
+data(15, 'not(ACESSÓRIO|CANETA|NUTRIÇÃO)', 'BRA_Antineoplastics_Transformation[not(ACESSÓRIO|CANETA|NUTRIÇÃO)]').
+data(16, 'DataProvFilter2', 'BRA_Antineoplastics_Transformation[DataProvFilter2]').
+data(17, 'Single', 'BRA_Antineoplastics_Transformation[Single]').
+data(18, 'Falta', 'BRA_Antineoplastics_Transformation[Falta]').
+data(19, 'FixedDose', 'BRA_Antineoplastics_Transformation[FixedDose]').
+data(20, 'Single.1', 'BRA_Antineoplastics_Transformation[Single.1]').
+data(21, 'Falta.1', 'BRA_Antineoplastics_Transformation[Falta.1]').
+data(22, 'FixedDose.1', 'BRA_Antineoplastics_Transformation[FixedDose.1]').
+data(25, 'DatosBr', 'BRA_Antineoplastics_Transformation[DatosBr]').
+data(26, 'DatosBr.1', 'BRA_Antineoplastics_Transformation[DatosBr.1]').
+data(27, 'DatosBrFinal', 'BRA_Antineoplastics_Transformation[DatosBrFinal]').
+data(28, 'FinalData', 'BRA_Antineoplastics_Transformation[FinalData]').
+data(29, 'output_file', 'BRA_Antineoplastics_Transformation[output_file]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 4).
+channel(2, 5).
+channel(3, 7).
+channel(4, 9).
+channel(5, 10).
+channel(6, 8).
+channel(7, 14).
+channel(8, 16).
+channel(9, 17).
+channel(10, 18).
+channel(11, 19).
+channel(12, 20).
+channel(13, 22).
+channel(14, 12).
+channel(15, 12).
+channel(16, 25).
+channel(17, 26).
+channel(18, 6).
+channel(19, 27).
+channel(20, 28).
+channel(21, 1).
+channel(22, 2).
+channel(23, 3).
+channel(24, 23).
+channel(25, 29).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(45, 1).
+port_connects_to_channel(5, 2).
+port_connects_to_channel(7, 3).
+port_connects_to_channel(9, 4).
+port_connects_to_channel(10, 5).
+port_connects_to_channel(11, 5).
+port_connects_to_channel(8, 6).
+port_connects_to_channel(14, 6).
+port_connects_to_channel(16, 7).
+port_connects_to_channel(18, 7).
+port_connects_to_channel(19, 8).
+port_connects_to_channel(20, 8).
+port_connects_to_channel(21, 9).
+port_connects_to_channel(24, 9).
+port_connects_to_channel(22, 10).
+port_connects_to_channel(25, 10).
+port_connects_to_channel(23, 11).
+port_connects_to_channel(26, 11).
+port_connects_to_channel(32, 12).
+port_connects_to_channel(29, 13).
+port_connects_to_channel(33, 13).
+port_connects_to_channel(13, 14).
+port_connects_to_channel(34, 14).
+port_connects_to_channel(13, 15).
+port_connects_to_channel(38, 15).
+port_connects_to_channel(35, 16).
+port_connects_to_channel(36, 16).
+port_connects_to_channel(37, 17).
+port_connects_to_channel(39, 17).
+port_connects_to_channel(6, 18).
+port_connects_to_channel(40, 18).
+port_connects_to_channel(41, 19).
+port_connects_to_channel(42, 19).
+port_connects_to_channel(43, 20).
+port_connects_to_channel(44, 20).
+port_connects_to_channel(7, 21).
+port_connects_to_channel(5, 22).
+port_connects_to_channel(9, 23).
+port_connects_to_channel(32, 24).
+port_connects_to_channel(45, 25).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(2, 2).
+inflow_connects_to_channel(1, 3).
+inflow_connects_to_channel(3, 4).
+inflow_connects_to_channel(30, 12).
+inflow_connects_to_channel(1, 21).
+inflow_connects_to_channel(2, 22).
+inflow_connects_to_channel(3, 23).
+inflow_connects_to_channel(30, 24).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(4, 1).
+outflow_connects_to_channel(4, 25).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 11, 'begin', '@begin', 'BRA_Antineoplastics_Transformation').
+annotation(2, 1, 12, 'in', '@in', 'antineoplastics_files').
+annotation(3, 1, 12, 'uri', '@URI', 'file:~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*').
+annotation(4, 1, 13, 'in', '@in', 'usd_clean').
+annotation(5, 1, 13, 'uri', '@URI', 'file:USD_BRLClean.csv').
+annotation(6, 1, 14, 'in', '@in', 'catalog_file').
+annotation(7, 1, 14, 'uri', '@URI', 'file:~/RStudio/PAHO/CatalogwPreciosClean.csv').
+annotation(8, 1, 15, 'out', '@out', 'output_file').
+annotation(9, 1, 22, 'begin', '@begin', 'read_usd_brlclean').
+annotation(10, 1, 23, 'in', '@in', 'usd_clean').
+annotation(11, 1, 23, 'uri', '@URI', 'file:USD_BRLClean.csv').
+annotation(12, 1, 24, 'out', '@out', 'Rea_USD').
+annotation(13, 1, 26, 'end', '@end', 'read_usd_brlclean').
+annotation(14, 1, 29, 'begin', '@begin', 'read_data_file').
+annotation(15, 1, 30, 'desc', '@desc', 'read multiple input files in directory and agregate the files into a variable DataProv').
+annotation(16, 1, 31, 'in', '@in', '~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*').
+annotation(17, 1, 31, 'as', '@as', 'antineoplastics_files').
+annotation(18, 1, 32, 'out', '@out', 'DataProv').
+annotation(19, 1, 40, 'end', '@end', 'read_data_file').
+annotation(20, 1, 50, 'begin', '@begin', 'read_catalog_file').
+annotation(21, 1, 51, 'desc', '@desc', 'read input catalog file, assign to variable Catalog').
+annotation(22, 1, 52, 'in', '@in', '~/RStudio/PAHO/CatalogwPreciosClean.csv').
+annotation(23, 1, 52, 'as', '@as', 'catalog_file').
+annotation(24, 1, 53, 'out', '@out', 'Catalog').
+annotation(25, 1, 55, 'end', '@end', 'read_catalog_file').
+annotation(26, 1, 57, 'begin', '@begin', 'to_consider').
+annotation(27, 1, 58, 'desc', '@desc', 'also output catalog to consider which is a filter based on TerapeuticArea').
+annotation(28, 1, 59, 'in', '@in', 'Catalog').
+annotation(29, 1, 60, 'param', '@param', 'Antineoplastics').
+annotation(30, 1, 60, 'as', '@as', 'TerapeuticArea').
+annotation(31, 1, 61, 'out', '@out', 'toconsider').
+annotation(32, 1, 65, 'end', '@end', 'to_consider').
+annotation(33, 1, 70, 'begin', '@begin', 'dataprov_filtering_1').
+annotation(34, 1, 71, 'desc', '@desc', 'filtering DataProv based on raw data columns and numberings/orders in the file').
+annotation(35, 1, 72, 'in', '@in', 'DataProv').
+annotation(36, 1, 73, 'param', '@param', 'c(2:4,6:10,12,14:22)').
+annotation(37, 1, 74, 'out', '@out', 'DataProvFilter1').
+annotation(38, 1, 76, 'end', '@end', 'dataprov_filtering_1').
+annotation(39, 1, 79, 'begin', '@begin', 'dataprov_filtering_2').
+annotation(40, 1, 80, 'desc', '@desc', 'additional filtering based onvalue on the column').
+annotation(41, 1, 81, 'param', '@param', 'not(ACESSÓRIO|CANETA|NUTRIÇÃO)').
+annotation(42, 1, 82, 'in', '@in', 'DataProvFilter1').
+annotation(43, 1, 83, 'out', '@out', 'DataProvFilter2').
+annotation(44, 1, 103, 'end', '@end', 'dataprov_filtering_2').
+annotation(45, 1, 107, 'begin', '@begin', 'separate_single_fixed_dose').
+annotation(46, 1, 108, 'desc', '@desc', 'SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries').
+annotation(47, 1, 109, 'in', '@in', 'DataProvFilter2').
+annotation(48, 1, 110, 'out', '@out', 'Single').
+annotation(49, 1, 111, 'out', '@out', 'Falta').
+annotation(50, 1, 112, 'out', '@out', 'FixedDose').
+annotation(51, 1, 117, 'end', '@end', 'separate_single_fixed_dose').
+annotation(52, 1, 120, 'begin', '@begin', 'create_new_columns').
+annotation(53, 1, 121, 'desc', '@desc', 'SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries').
+annotation(54, 1, 122, 'in', '@in', 'Single').
+annotation(55, 1, 123, 'in', '@in', 'Falta').
+annotation(56, 1, 124, 'in', '@in', 'FixedDose').
+annotation(57, 1, 125, 'out', '@out', 'Single.1').
+annotation(58, 1, 126, 'out', '@out', 'Falta.1').
+annotation(59, 1, 127, 'out', '@out', 'FixedDose.1').
+annotation(60, 1, 164, 'end', '@end', 'create_new_columns').
+annotation(61, 1, 167, 'desc', '@desc', 'Single table for Primer and Concentraction1').
+annotation(62, 1, 168, 'in', '@in', 'Single.1').
+annotation(63, 1, 169, 'out', '@out', 'SingleNom').
+annotation(64, 1, 176, 'begin', '@begin', 'join_single_fixed_dose').
+annotation(65, 1, 177, 'desc', '@desc', 'JOIN SINGLE AND FIXED DOSE ENTRIES').
+annotation(66, 1, 178, 'in', '@in', 'Single.1').
+annotation(67, 1, 179, 'in', '@in', 'FixedDose.1').
+annotation(68, 1, 180, 'in', '@in', 'toconsider').
+annotation(69, 1, 181, 'out', '@out', 'DatosBr').
+annotation(70, 1, 240, 'end', '@end', 'join_single_fixed_dose').
+annotation(71, 1, 243, 'begin', '@begin', 'datosbr_exceptions').
+annotation(72, 1, 244, 'desc', '@desc', 'ADD EXCEPTIONS').
+annotation(73, 1, 245, 'in', '@in', 'DatosBr').
+annotation(74, 1, 246, 'out', '@out', 'DatosBr.1').
+annotation(75, 1, 256, 'end', '@end', 'datosbr_exceptions').
+annotation(76, 1, 266, 'begin', '@begin', 'finalize_datos_br').
+annotation(77, 1, 267, 'in', '@in', 'toconsider').
+annotation(78, 1, 268, 'in', '@in', 'DatosBr.1').
+annotation(79, 1, 269, 'in', '@in', 'Rea_USD').
+annotation(80, 1, 270, 'out', '@out', 'DatosBrFinal').
+annotation(81, 1, 285, 'end', '@end', 'finalize_datos_br').
+annotation(82, 1, 290, 'begin', '@begin', 'finalize_data').
+annotation(83, 1, 291, 'in', '@in', 'DatosBrFinal').
+annotation(84, 1, 292, 'out', '@out', 'FinalData').
+annotation(85, 1, 327, 'end', '@end', 'finalize_data').
+annotation(86, 1, 329, 'begin', '@begin', 'write_final_data').
+annotation(87, 1, 330, 'in', '@in', 'FinalData').
+annotation(88, 1, 331, 'out', '@out', 'output_file').
+annotation(89, 1, 331, 'uri', '@URI', 'file:~/RStudio/PAHO/Scrappers/Brasil/\<TerapeuticArea\>.csv').
+annotation(90, 1, 333, 'end', '@end', 'write_final_data').
+annotation(91, 1, 338, 'end', '@end', 'BRA_Antineoplastics_Transformation').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(3, 2).
+annotation_qualifies(5, 4).
+annotation_qualifies(7, 6).
+annotation_qualifies(11, 10).
+annotation_qualifies(15, 14).
+annotation_qualifies(17, 16).
+annotation_qualifies(21, 20).
+annotation_qualifies(23, 22).
+annotation_qualifies(27, 26).
+annotation_qualifies(30, 29).
+annotation_qualifies(34, 33).
+annotation_qualifies(40, 39).
+annotation_qualifies(46, 45).
+annotation_qualifies(53, 52).
+annotation_qualifies(61, 60).
+annotation_qualifies(65, 64).
+annotation_qualifies(72, 71).
+annotation_qualifies(89, 88).

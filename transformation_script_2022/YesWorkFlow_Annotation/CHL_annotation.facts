@@ -1,0 +1,677 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'ChileProcessing', 'ChileProcessing', 1, 160).
+program(2, 'read_entry_files', 'ChileProcessing.read_entry_files', 22, 26).
+program(3, 'filter_chl', 'ChileProcessing.filter_chl', 27, 30).
+program(4, 'read_price_database', 'ChileProcessing.read_price_database', 31, 35).
+program(5, 'read_price_2019', 'ChileProcessing.read_price_2019', 36, 39).
+program(6, 'read_price_taxonomy', 'ChileProcessing.read_price_taxonomy', 40, 44).
+program(7, 'combined_chl', 'ChileProcessing.combined_chl', 45, 49).
+program(8, 'read_catalog', 'ChileProcessing.read_catalog', 50, 54).
+program(9, 'combined_new_entries', 'ChileProcessing.combined_new_entries', 55, 59).
+program(10, 'processed_catalog', 'ChileProcessing.processed_catalog', 60, 64).
+program(11, 'catalog_join_prices_2019', 'ChileProcessing.catalog_join_prices_2019', 65, 69).
+program(12, 'filter_fixed_dose_catalog', 'ChileProcessing.filter_fixed_dose_catalog', 70, 73).
+program(13, 'filter_single_dose_catalog', 'ChileProcessing.filter_single_dose_catalog', 74, 77).
+program(14, 'prepare_chlmap', 'ChileProcessing.prepare_chlmap', 78, 81).
+program(15, 'prepare_Therapeutic', 'ChileProcessing.prepare_Therapeutic', 82, 85).
+program(16, 'prepare_chlmap2', 'ChileProcessing.prepare_chlmap2', 86, 91).
+program(17, 'read_price_database_mar_31', 'ChileProcessing.read_price_database_mar_31', 92, 96).
+program(18, 'process_FinalCenabast', 'ChileProcessing.process_FinalCenabast', 97, 103).
+program(19, 'read_chl_3', 'ChileProcessing.read_chl_3', 104, 108).
+program(20, 'prepare_chl32', 'ChileProcessing.prepare_chl32', 109, 113).
+program(21, 'prepare_Municipalidades_data', 'ChileProcessing.prepare_Municipalidades_data', 114, 119).
+program(22, 'prepare_chlfinal', 'ChileProcessing.prepare_chlfinal', 120, 124).
+program(23, 'read_LEISHMANIASIS', 'ChileProcessing.read_LEISHMANIASIS', 125, 129).
+program(24, 'prepare_LEI', 'ChileProcessing.prepare_LEI', 130, 134).
+program(25, 'combined_lei_chlfinal', 'ChileProcessing.combined_lei_chlfinal', 135, 139).
+program(26, 'read_heartsdata', 'ChileProcessing.read_heartsdata', 140, 144).
+program(27, 'process_chl2', 'ChileProcessing.process_chl2', 145, 149).
+program(28, 'combined_chlfinal_chl2', 'ChileProcessing.combined_chlfinal_chl2', 150, 154).
+program(29, 'write_chile_final', 'ChileProcessing.write_chile_final', 155, 159).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+has_subprogram(1, 10).
+has_subprogram(1, 11).
+has_subprogram(1, 12).
+has_subprogram(1, 13).
+has_subprogram(1, 14).
+has_subprogram(1, 15).
+has_subprogram(1, 16).
+has_subprogram(1, 17).
+has_subprogram(1, 18).
+has_subprogram(1, 19).
+has_subprogram(1, 20).
+has_subprogram(1, 21).
+has_subprogram(1, 22).
+has_subprogram(1, 23).
+has_subprogram(1, 24).
+has_subprogram(1, 25).
+has_subprogram(1, 26).
+has_subprogram(1, 27).
+has_subprogram(1, 28).
+has_subprogram(1, 29).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'CHL_Cenabast_Filtered', 'ChileProcessing<-CHL_Cenabast_Filtered', 2, 1).
+port(2, 'in', 'PriceDataBaseFile', 'ChileProcessing<-PriceDataBaseFile', 4, 2).
+port(3, 'in', 'Prices_2019_2021_File', 'ChileProcessing<-Prices_2019_2021_File', 6, 3).
+port(4, 'in', 'TaxonomyFile', 'ChileProcessing<-TaxonomyFile', 8, 4).
+port(5, 'in', 'New_Catalog_Products_File', 'ChileProcessing<-New_Catalog_Products_File', 10, 5).
+port(6, 'in', 'Municipalidades_File', 'ChileProcessing<-Municipalidades_File', 12, 6).
+port(7, 'in', 'LEISHMANIASIS_File', 'ChileProcessing<-LEISHMANIASIS_File', 14, 7).
+port(8, 'in', 'PriceDataBaseMar31_File', 'ChileProcessing<-PriceDataBaseMar31_File', 16, 8).
+port(9, 'in', 'Hearts_data_File', 'ChileProcessing<-Hearts_data_File', 18, 9).
+port(10, 'out', 'ChileFinal_File', 'ChileProcessing->ChileFinal_File', 20, 10).
+port(11, 'in', 'CHL_Cenabast_Filtered', 'ChileProcessing.read_entry_files<-CHL_Cenabast_Filtered', 24, 11).
+port(12, 'out', 'CHL', 'ChileProcessing.read_entry_files->CHL', 25, 12).
+port(13, 'in', 'CHL', 'ChileProcessing.filter_chl<-CHL', 28, 12).
+port(14, 'out', 'CHL.1', 'ChileProcessing.filter_chl->CHL.1', 29, 13).
+port(15, 'in', 'PriceDataBaseFile', 'ChileProcessing.read_price_database<-PriceDataBaseFile', 32, 14).
+port(16, 'out', 'PriceDataBase', 'ChileProcessing.read_price_database->PriceDataBase', 34, 15).
+port(17, 'in', 'Prices_2019_2021_File', 'ChileProcessing.read_price_2019<-Prices_2019_2021_File', 37, 16).
+port(18, 'out', 'Prices_2019_2021', 'ChileProcessing.read_price_2019->Prices_2019_2021', 38, 17).
+port(19, 'in', 'TaxonomyFile', 'ChileProcessing.read_price_taxonomy<-TaxonomyFile', 41, 18).
+port(20, 'out', 'Taxonomy', 'ChileProcessing.read_price_taxonomy->Taxonomy', 43, 19).
+port(21, 'in', 'CHL.1', 'ChileProcessing.combined_chl<-CHL.1', 46, 13).
+port(22, 'in', 'PriceDataBase', 'ChileProcessing.combined_chl<-PriceDataBase', 47, 15).
+port(23, 'out', 'CHLFinal', 'ChileProcessing.combined_chl->CHLFinal', 48, 20).
+port(24, 'in', 'New_Catalog_Products_File', 'ChileProcessing.read_catalog<-New_Catalog_Products_File', 51, 21).
+port(25, 'out', 'NewEntries', 'ChileProcessing.read_catalog->NewEntries', 53, 22).
+port(26, 'in', 'NewEntries', 'ChileProcessing.combined_new_entries<-NewEntries', 56, 22).
+port(27, 'in', 'Taxonomy', 'ChileProcessing.combined_new_entries<-Taxonomy', 57, 19).
+port(28, 'out', 'NewEntries2', 'ChileProcessing.combined_new_entries->NewEntries2', 58, 23).
+port(29, 'in', 'NewEntries2', 'ChileProcessing.processed_catalog<-NewEntries2', 61, 23).
+port(30, 'in', 'Taxonomy', 'ChileProcessing.processed_catalog<-Taxonomy', 62, 19).
+port(31, 'out', 'Catalog', 'ChileProcessing.processed_catalog->Catalog', 63, 24).
+port(32, 'in', 'Catalog', 'ChileProcessing.catalog_join_prices_2019<-Catalog', 66, 24).
+port(33, 'in', 'Prices_2019_2021', 'ChileProcessing.catalog_join_prices_2019<-Prices_2019_2021', 67, 17).
+port(34, 'out', 'Catalog.1', 'ChileProcessing.catalog_join_prices_2019->Catalog.1', 68, 25).
+port(35, 'in', 'Catalog.1', 'ChileProcessing.filter_fixed_dose_catalog<-Catalog.1', 71, 25).
+port(36, 'out', 'FixedDoseCatalog', 'ChileProcessing.filter_fixed_dose_catalog->FixedDoseCatalog', 72, 26).
+port(37, 'in', 'Catalog.1', 'ChileProcessing.filter_single_dose_catalog<-Catalog.1', 75, 25).
+port(38, 'out', 'SingleDoseCatalog', 'ChileProcessing.filter_single_dose_catalog->SingleDoseCatalog', 76, 27).
+port(39, 'in', 'CHL.1', 'ChileProcessing.prepare_chlmap<-CHL.1', 79, 13).
+port(40, 'out', 'CHLMAP', 'ChileProcessing.prepare_chlmap->CHLMAP', 80, 28).
+port(41, 'in', 'Catalog.1', 'ChileProcessing.prepare_Therapeutic<-Catalog.1', 83, 25).
+port(42, 'out', 'Therapeutic', 'ChileProcessing.prepare_Therapeutic->Therapeutic', 84, 29).
+port(43, 'in', 'CHLMAP', 'ChileProcessing.prepare_chlmap2<-CHLMAP', 87, 28).
+port(44, 'in', 'Prices_2019_2021', 'ChileProcessing.prepare_chlmap2<-Prices_2019_2021', 88, 17).
+port(45, 'in', 'Therapeutic', 'ChileProcessing.prepare_chlmap2<-Therapeutic', 89, 29).
+port(46, 'out', 'CHLMAP2', 'ChileProcessing.prepare_chlmap2->CHLMAP2', 90, 30).
+port(47, 'in', 'PriceDataBaseMar31_File', 'ChileProcessing.read_price_database_mar_31<-PriceDataBaseMar31_File', 93, 31).
+port(48, 'out', 'PriceDataBase.1', 'ChileProcessing.read_price_database_mar_31->PriceDataBase.1', 95, 32).
+port(49, 'in', 'CHLMAP', 'ChileProcessing.process_FinalCenabast<-CHLMAP', 98, 28).
+port(50, 'in', 'PriceDataBase.1', 'ChileProcessing.process_FinalCenabast<-PriceDataBase.1', 99, 32).
+port(51, 'in', 'CHLMAP2', 'ChileProcessing.process_FinalCenabast<-CHLMAP2', 100, 30).
+port(52, 'in', 'CHL.1', 'ChileProcessing.process_FinalCenabast<-CHL.1', 101, 13).
+port(53, 'out', 'FinalCenabast', 'ChileProcessing.process_FinalCenabast->FinalCenabast', 102, 33).
+port(54, 'in', 'Municipalidades_File', 'ChileProcessing.read_chl_3<-Municipalidades_File', 105, 34).
+port(55, 'out', 'CHL3', 'ChileProcessing.read_chl_3->CHL3', 107, 35).
+port(56, 'in', 'CHL3', 'ChileProcessing.prepare_chl32<-CHL3', 110, 35).
+port(57, 'in', 'Therapeutic', 'ChileProcessing.prepare_chl32<-Therapeutic', 111, 29).
+port(58, 'out', 'CHL32', 'ChileProcessing.prepare_chl32->CHL32', 112, 36).
+port(59, 'in', 'CHL3', 'ChileProcessing.prepare_Municipalidades_data<-CHL3', 115, 35).
+port(60, 'in', 'PriceDataBase.1', 'ChileProcessing.prepare_Municipalidades_data<-PriceDataBase.1', 116, 32).
+port(61, 'in', 'CHL32', 'ChileProcessing.prepare_Municipalidades_data<-CHL32', 117, 36).
+port(62, 'out', 'temp_Municipalidades', 'ChileProcessing.prepare_Municipalidades_data->temp_Municipalidades', 118, 37).
+port(63, 'in', 'FinalCenabast', 'ChileProcessing.prepare_chlfinal<-FinalCenabast', 121, 33).
+port(64, 'in', 'temp_Municipalidades', 'ChileProcessing.prepare_chlfinal<-temp_Municipalidades', 122, 37).
+port(65, 'out', 'CHLFinal.1', 'ChileProcessing.prepare_chlfinal->CHLFinal.1', 123, 38).
+port(66, 'in', 'LEISHMANIASIS_File', 'ChileProcessing.read_LEISHMANIASIS<-LEISHMANIASIS_File', 126, 39).
+port(67, 'out', 'LE', 'ChileProcessing.read_LEISHMANIASIS->LE', 128, 40).
+port(68, 'in', 'LE', 'ChileProcessing.prepare_LEI<-LE', 131, 40).
+port(69, 'in', 'PriceDataBase.1', 'ChileProcessing.prepare_LEI<-PriceDataBase.1', 132, 32).
+port(70, 'out', 'LEI', 'ChileProcessing.prepare_LEI->LEI', 133, 41).
+port(71, 'in', 'CHLFinal.1', 'ChileProcessing.combined_lei_chlfinal<-CHLFinal.1', 136, 38).
+port(72, 'in', 'LEI', 'ChileProcessing.combined_lei_chlfinal<-LEI', 137, 41).
+port(73, 'out', 'CHLFinal.2', 'ChileProcessing.combined_lei_chlfinal->CHLFinal.2', 138, 42).
+port(74, 'in', 'Hearts_data_File', 'ChileProcessing.read_heartsdata<-Hearts_data_File', 141, 43).
+port(75, 'out', 'CHL2', 'ChileProcessing.read_heartsdata->CHL2', 143, 44).
+port(76, 'in', 'CHL2', 'ChileProcessing.process_chl2<-CHL2', 146, 44).
+port(77, 'in', 'PriceDataBase.1', 'ChileProcessing.process_chl2<-PriceDataBase.1', 147, 32).
+port(78, 'out', 'temp_CHL2', 'ChileProcessing.process_chl2->temp_CHL2', 148, 45).
+port(79, 'in', 'CHLFinal.2', 'ChileProcessing.combined_chlfinal_chl2<-CHLFinal.2', 151, 42).
+port(80, 'in', 'temp_CHL2', 'ChileProcessing.combined_chlfinal_chl2<-temp_CHL2', 152, 45).
+port(81, 'out', 'CHLFinal.3', 'ChileProcessing.combined_chlfinal_chl2->CHLFinal.3', 153, 46).
+port(82, 'in', 'CHLFinal.3', 'ChileProcessing.write_chile_final<-CHLFinal.3', 156, 46).
+port(83, 'out', 'ChileFinal_File', 'ChileProcessing.write_chile_final->ChileFinal_File', 157, 47).
+
+% FACT: port_alias(port_id, alias).
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(1, 'file:CHL_Cenabast_Filtered_20-22.xlsx').
+port_uri_template(2, 'file:PriceDataBase.xlsx').
+port_uri_template(3, 'file:Prices_2019-2021.xlsx').
+port_uri_template(4, 'file:Taxonomy.xlsx').
+port_uri_template(5, 'New_Catalog_Products.xlsx').
+port_uri_template(6, 'Municipalidades.xlsx').
+port_uri_template(7, 'LEISHMANIASIS_Price_Analysis.xlsx').
+port_uri_template(8, 'file:PriceDataBaseMar31.xlsx').
+port_uri_template(9, 'file:Hearts_data_CHL.xlsx').
+port_uri_template(10, 'file:ChileFinal.xlsx').
+port_uri_template(15, 'PriceDataBase.xlsx').
+port_uri_template(19, 'file:Taxonomy.xlsx').
+port_uri_template(24, 'file:Price').
+port_uri_template(47, 'file:PriceDataBaseMar31.xlsx').
+port_uri_template(54, 'Municipalidades.xlsx').
+port_uri_template(66, 'LEISHMANIASIS_Price_Analysis.xlsx').
+port_uri_template(74, 'file:Hearts_data_CHL.xlsx').
+port_uri_template(83, 'ChileFinal.xlsx').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(1, 3).
+has_in_port(1, 4).
+has_in_port(1, 5).
+has_in_port(1, 6).
+has_in_port(1, 7).
+has_in_port(1, 8).
+has_in_port(1, 9).
+has_in_port(2, 11).
+has_in_port(3, 13).
+has_in_port(4, 15).
+has_in_port(5, 17).
+has_in_port(6, 19).
+has_in_port(7, 21).
+has_in_port(7, 22).
+has_in_port(8, 24).
+has_in_port(9, 26).
+has_in_port(9, 27).
+has_in_port(10, 29).
+has_in_port(10, 30).
+has_in_port(11, 32).
+has_in_port(11, 33).
+has_in_port(12, 35).
+has_in_port(13, 37).
+has_in_port(14, 39).
+has_in_port(15, 41).
+has_in_port(16, 43).
+has_in_port(16, 44).
+has_in_port(16, 45).
+has_in_port(17, 47).
+has_in_port(18, 49).
+has_in_port(18, 50).
+has_in_port(18, 51).
+has_in_port(18, 52).
+has_in_port(19, 54).
+has_in_port(20, 56).
+has_in_port(20, 57).
+has_in_port(21, 59).
+has_in_port(21, 60).
+has_in_port(21, 61).
+has_in_port(22, 63).
+has_in_port(22, 64).
+has_in_port(23, 66).
+has_in_port(24, 68).
+has_in_port(24, 69).
+has_in_port(25, 71).
+has_in_port(25, 72).
+has_in_port(26, 74).
+has_in_port(27, 76).
+has_in_port(27, 77).
+has_in_port(28, 79).
+has_in_port(28, 80).
+has_in_port(29, 82).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 10).
+has_out_port(2, 12).
+has_out_port(3, 14).
+has_out_port(4, 16).
+has_out_port(5, 18).
+has_out_port(6, 20).
+has_out_port(7, 23).
+has_out_port(8, 25).
+has_out_port(9, 28).
+has_out_port(10, 31).
+has_out_port(11, 34).
+has_out_port(12, 36).
+has_out_port(13, 38).
+has_out_port(14, 40).
+has_out_port(15, 42).
+has_out_port(16, 46).
+has_out_port(17, 48).
+has_out_port(18, 53).
+has_out_port(19, 55).
+has_out_port(20, 58).
+has_out_port(21, 62).
+has_out_port(22, 65).
+has_out_port(23, 67).
+has_out_port(24, 70).
+has_out_port(25, 73).
+has_out_port(26, 75).
+has_out_port(27, 78).
+has_out_port(28, 81).
+has_out_port(29, 83).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'CHL_Cenabast_Filtered', '[CHL_Cenabast_Filtered]').
+data(2, 'PriceDataBaseFile', '[PriceDataBaseFile]').
+data(3, 'Prices_2019_2021_File', '[Prices_2019_2021_File]').
+data(4, 'TaxonomyFile', '[TaxonomyFile]').
+data(5, 'New_Catalog_Products_File', '[New_Catalog_Products_File]').
+data(6, 'Municipalidades_File', '[Municipalidades_File]').
+data(7, 'LEISHMANIASIS_File', '[LEISHMANIASIS_File]').
+data(8, 'PriceDataBaseMar31_File', '[PriceDataBaseMar31_File]').
+data(9, 'Hearts_data_File', '[Hearts_data_File]').
+data(10, 'ChileFinal_File', '[ChileFinal_File]').
+data(11, 'CHL_Cenabast_Filtered', 'ChileProcessing[CHL_Cenabast_Filtered]').
+data(12, 'CHL', 'ChileProcessing[CHL]').
+data(13, 'CHL.1', 'ChileProcessing[CHL.1]').
+data(14, 'PriceDataBaseFile', 'ChileProcessing[PriceDataBaseFile]').
+data(15, 'PriceDataBase', 'ChileProcessing[PriceDataBase]').
+data(16, 'Prices_2019_2021_File', 'ChileProcessing[Prices_2019_2021_File]').
+data(17, 'Prices_2019_2021', 'ChileProcessing[Prices_2019_2021]').
+data(18, 'TaxonomyFile', 'ChileProcessing[TaxonomyFile]').
+data(19, 'Taxonomy', 'ChileProcessing[Taxonomy]').
+data(20, 'CHLFinal', 'ChileProcessing[CHLFinal]').
+data(21, 'New_Catalog_Products_File', 'ChileProcessing[New_Catalog_Products_File]').
+data(22, 'NewEntries', 'ChileProcessing[NewEntries]').
+data(23, 'NewEntries2', 'ChileProcessing[NewEntries2]').
+data(24, 'Catalog', 'ChileProcessing[Catalog]').
+data(25, 'Catalog.1', 'ChileProcessing[Catalog.1]').
+data(26, 'FixedDoseCatalog', 'ChileProcessing[FixedDoseCatalog]').
+data(27, 'SingleDoseCatalog', 'ChileProcessing[SingleDoseCatalog]').
+data(28, 'CHLMAP', 'ChileProcessing[CHLMAP]').
+data(29, 'Therapeutic', 'ChileProcessing[Therapeutic]').
+data(30, 'CHLMAP2', 'ChileProcessing[CHLMAP2]').
+data(31, 'PriceDataBaseMar31_File', 'ChileProcessing[PriceDataBaseMar31_File]').
+data(32, 'PriceDataBase.1', 'ChileProcessing[PriceDataBase.1]').
+data(33, 'FinalCenabast', 'ChileProcessing[FinalCenabast]').
+data(34, 'Municipalidades_File', 'ChileProcessing[Municipalidades_File]').
+data(35, 'CHL3', 'ChileProcessing[CHL3]').
+data(36, 'CHL32', 'ChileProcessing[CHL32]').
+data(37, 'temp_Municipalidades', 'ChileProcessing[temp_Municipalidades]').
+data(38, 'CHLFinal.1', 'ChileProcessing[CHLFinal.1]').
+data(39, 'LEISHMANIASIS_File', 'ChileProcessing[LEISHMANIASIS_File]').
+data(40, 'LE', 'ChileProcessing[LE]').
+data(41, 'LEI', 'ChileProcessing[LEI]').
+data(42, 'CHLFinal.2', 'ChileProcessing[CHLFinal.2]').
+data(43, 'Hearts_data_File', 'ChileProcessing[Hearts_data_File]').
+data(44, 'CHL2', 'ChileProcessing[CHL2]').
+data(45, 'temp_CHL2', 'ChileProcessing[temp_CHL2]').
+data(46, 'CHLFinal.3', 'ChileProcessing[CHLFinal.3]').
+data(47, 'ChileFinal_File', 'ChileProcessing[ChileFinal_File]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 10).
+channel(2, 11).
+channel(3, 12).
+channel(4, 14).
+channel(5, 16).
+channel(6, 18).
+channel(7, 13).
+channel(8, 13).
+channel(9, 13).
+channel(10, 15).
+channel(11, 21).
+channel(12, 22).
+channel(13, 19).
+channel(14, 19).
+channel(15, 23).
+channel(16, 24).
+channel(17, 17).
+channel(18, 17).
+channel(19, 25).
+channel(20, 25).
+channel(21, 25).
+channel(22, 28).
+channel(23, 28).
+channel(24, 29).
+channel(25, 29).
+channel(26, 31).
+channel(27, 32).
+channel(28, 32).
+channel(29, 32).
+channel(30, 32).
+channel(31, 30).
+channel(32, 34).
+channel(33, 35).
+channel(34, 35).
+channel(35, 36).
+channel(36, 33).
+channel(37, 37).
+channel(38, 39).
+channel(39, 40).
+channel(40, 38).
+channel(41, 41).
+channel(42, 43).
+channel(43, 44).
+channel(44, 42).
+channel(45, 45).
+channel(46, 46).
+channel(47, 1).
+channel(48, 2).
+channel(49, 3).
+channel(50, 4).
+channel(51, 5).
+channel(52, 6).
+channel(53, 7).
+channel(54, 8).
+channel(55, 9).
+channel(56, 47).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(83, 1).
+port_connects_to_channel(11, 2).
+port_connects_to_channel(12, 3).
+port_connects_to_channel(13, 3).
+port_connects_to_channel(15, 4).
+port_connects_to_channel(17, 5).
+port_connects_to_channel(19, 6).
+port_connects_to_channel(14, 7).
+port_connects_to_channel(21, 7).
+port_connects_to_channel(14, 8).
+port_connects_to_channel(39, 8).
+port_connects_to_channel(14, 9).
+port_connects_to_channel(52, 9).
+port_connects_to_channel(16, 10).
+port_connects_to_channel(22, 10).
+port_connects_to_channel(24, 11).
+port_connects_to_channel(25, 12).
+port_connects_to_channel(26, 12).
+port_connects_to_channel(20, 13).
+port_connects_to_channel(27, 13).
+port_connects_to_channel(20, 14).
+port_connects_to_channel(30, 14).
+port_connects_to_channel(28, 15).
+port_connects_to_channel(29, 15).
+port_connects_to_channel(31, 16).
+port_connects_to_channel(32, 16).
+port_connects_to_channel(18, 17).
+port_connects_to_channel(33, 17).
+port_connects_to_channel(18, 18).
+port_connects_to_channel(44, 18).
+port_connects_to_channel(34, 19).
+port_connects_to_channel(35, 19).
+port_connects_to_channel(34, 20).
+port_connects_to_channel(37, 20).
+port_connects_to_channel(34, 21).
+port_connects_to_channel(41, 21).
+port_connects_to_channel(40, 22).
+port_connects_to_channel(43, 22).
+port_connects_to_channel(40, 23).
+port_connects_to_channel(49, 23).
+port_connects_to_channel(42, 24).
+port_connects_to_channel(45, 24).
+port_connects_to_channel(42, 25).
+port_connects_to_channel(57, 25).
+port_connects_to_channel(47, 26).
+port_connects_to_channel(48, 27).
+port_connects_to_channel(50, 27).
+port_connects_to_channel(48, 28).
+port_connects_to_channel(60, 28).
+port_connects_to_channel(48, 29).
+port_connects_to_channel(69, 29).
+port_connects_to_channel(48, 30).
+port_connects_to_channel(77, 30).
+port_connects_to_channel(46, 31).
+port_connects_to_channel(51, 31).
+port_connects_to_channel(54, 32).
+port_connects_to_channel(55, 33).
+port_connects_to_channel(56, 33).
+port_connects_to_channel(55, 34).
+port_connects_to_channel(59, 34).
+port_connects_to_channel(58, 35).
+port_connects_to_channel(61, 35).
+port_connects_to_channel(53, 36).
+port_connects_to_channel(63, 36).
+port_connects_to_channel(62, 37).
+port_connects_to_channel(64, 37).
+port_connects_to_channel(66, 38).
+port_connects_to_channel(67, 39).
+port_connects_to_channel(68, 39).
+port_connects_to_channel(65, 40).
+port_connects_to_channel(71, 40).
+port_connects_to_channel(70, 41).
+port_connects_to_channel(72, 41).
+port_connects_to_channel(74, 42).
+port_connects_to_channel(75, 43).
+port_connects_to_channel(76, 43).
+port_connects_to_channel(73, 44).
+port_connects_to_channel(79, 44).
+port_connects_to_channel(78, 45).
+port_connects_to_channel(80, 45).
+port_connects_to_channel(81, 46).
+port_connects_to_channel(82, 46).
+port_connects_to_channel(11, 47).
+port_connects_to_channel(15, 48).
+port_connects_to_channel(17, 49).
+port_connects_to_channel(19, 50).
+port_connects_to_channel(24, 51).
+port_connects_to_channel(54, 52).
+port_connects_to_channel(66, 53).
+port_connects_to_channel(47, 54).
+port_connects_to_channel(74, 55).
+port_connects_to_channel(83, 56).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(1, 2).
+inflow_connects_to_channel(2, 4).
+inflow_connects_to_channel(3, 5).
+inflow_connects_to_channel(4, 6).
+inflow_connects_to_channel(5, 11).
+inflow_connects_to_channel(8, 26).
+inflow_connects_to_channel(6, 32).
+inflow_connects_to_channel(7, 38).
+inflow_connects_to_channel(9, 42).
+inflow_connects_to_channel(1, 47).
+inflow_connects_to_channel(2, 48).
+inflow_connects_to_channel(3, 49).
+inflow_connects_to_channel(4, 50).
+inflow_connects_to_channel(5, 51).
+inflow_connects_to_channel(6, 52).
+inflow_connects_to_channel(7, 53).
+inflow_connects_to_channel(8, 54).
+inflow_connects_to_channel(9, 55).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(10, 1).
+outflow_connects_to_channel(10, 56).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@begin', 'ChileProcessing').
+annotation(2, 1, 2, 'in', '@in', 'CHL_Cenabast_Filtered').
+annotation(3, 1, 2, 'uri', '@URI', 'file:CHL_Cenabast_Filtered_20-22.xlsx').
+annotation(4, 1, 3, 'in', '@in', 'PriceDataBaseFile').
+annotation(5, 1, 3, 'uri', '@URI', 'file:PriceDataBase.xlsx').
+annotation(6, 1, 4, 'in', '@in', 'Prices_2019_2021_File').
+annotation(7, 1, 4, 'uri', '@URI', 'file:Prices_2019-2021.xlsx').
+annotation(8, 1, 5, 'in', '@in', 'TaxonomyFile').
+annotation(9, 1, 5, 'uri', '@URI', 'file:Taxonomy.xlsx').
+annotation(10, 1, 6, 'in', '@in', 'New_Catalog_Products_File').
+annotation(11, 1, 6, 'uri', '@URI', 'New_Catalog_Products.xlsx').
+annotation(12, 1, 7, 'in', '@in', 'Municipalidades_File').
+annotation(13, 1, 7, 'uri', '@URI', 'Municipalidades.xlsx').
+annotation(14, 1, 8, 'in', '@in', 'LEISHMANIASIS_File').
+annotation(15, 1, 8, 'uri', '@URI', 'LEISHMANIASIS_Price_Analysis.xlsx').
+annotation(16, 1, 9, 'in', '@in', 'PriceDataBaseMar31_File').
+annotation(17, 1, 9, 'uri', '@URI', 'file:PriceDataBaseMar31.xlsx').
+annotation(18, 1, 10, 'in', '@in', 'Hearts_data_File').
+annotation(19, 1, 10, 'uri', '@URI', 'file:Hearts_data_CHL.xlsx').
+annotation(20, 1, 11, 'out', '@out', 'ChileFinal_File').
+annotation(21, 1, 11, 'uri', '@URI', 'file:ChileFinal.xlsx').
+annotation(22, 1, 22, 'begin', '@begin', 'read_entry_files').
+annotation(23, 1, 23, 'desc', '@desc', 'Read the Entry files, the full database and the Taxonomy (the Catalog)').
+annotation(24, 1, 24, 'in', '@in', 'CHL_Cenabast_Filtered').
+annotation(25, 1, 25, 'out', '@out', 'CHL').
+annotation(26, 1, 28, 'end', '@end', 'read_entry_files').
+annotation(27, 1, 30, 'begin', '@begin', 'filter_chl').
+annotation(28, 1, 31, 'in', '@in', 'CHL').
+annotation(29, 1, 32, 'out', '@out', 'CHL.1').
+annotation(30, 1, 34, 'end', '@end', 'filter_chl').
+annotation(31, 1, 36, 'begin', '@begin', 'read_price_database').
+annotation(32, 1, 37, 'in', '@in', 'PriceDataBaseFile').
+annotation(33, 1, 37, 'uri', '@URI', 'PriceDataBase.xlsx').
+annotation(34, 1, 38, 'out', '@out', 'PriceDataBase').
+annotation(35, 1, 40, 'end', '@end', 'read_price_database').
+annotation(36, 1, 42, 'begin', '@begin', 'read_price_2019').
+annotation(37, 1, 43, 'in', '@in', 'Prices_2019_2021_File').
+annotation(38, 1, 44, 'out', '@out', 'Prices_2019_2021').
+annotation(39, 1, 47, 'end', '@end', 'read_price_2019').
+annotation(40, 1, 49, 'begin', '@begin', 'read_price_taxonomy').
+annotation(41, 1, 50, 'in', '@in', 'TaxonomyFile').
+annotation(42, 1, 50, 'uri', '@URI', 'file:Taxonomy.xlsx').
+annotation(43, 1, 51, 'out', '@out', 'Taxonomy').
+annotation(44, 1, 53, 'end', '@end', 'read_price_taxonomy').
+annotation(45, 1, 56, 'begin', '@begin', 'combined_chl').
+annotation(46, 1, 57, 'in', '@in', 'CHL.1').
+annotation(47, 1, 58, 'in', '@in', 'PriceDataBase').
+annotation(48, 1, 59, 'out', '@out', 'CHLFinal').
+annotation(49, 1, 62, 'end', '@end', 'combined_chl').
+annotation(50, 1, 71, 'begin', '@begin', 'read_catalog').
+annotation(51, 1, 72, 'in', '@in', 'New_Catalog_Products_File').
+annotation(52, 1, 72, 'uri', '@URI', 'file:Price').
+annotation(53, 1, 73, 'out', '@out', 'NewEntries').
+annotation(54, 1, 75, 'end', '@end', 'read_catalog').
+annotation(55, 1, 77, 'begin', '@begin', 'combined_new_entries').
+annotation(56, 1, 78, 'in', '@in', 'NewEntries').
+annotation(57, 1, 79, 'in', '@in', 'Taxonomy').
+annotation(58, 1, 80, 'out', '@out', 'NewEntries2').
+annotation(59, 1, 85, 'end', '@end', 'combined_new_entries').
+annotation(60, 1, 87, 'begin', '@begin', 'processed_catalog').
+annotation(61, 1, 88, 'in', '@in', 'NewEntries2').
+annotation(62, 1, 89, 'in', '@in', 'Taxonomy').
+annotation(63, 1, 90, 'out', '@out', 'Catalog').
+annotation(64, 1, 93, 'end', '@end', 'processed_catalog').
+annotation(65, 1, 97, 'begin', '@begin', 'catalog_join_prices_2019').
+annotation(66, 1, 98, 'in', '@in', 'Catalog').
+annotation(67, 1, 99, 'in', '@in', 'Prices_2019_2021').
+annotation(68, 1, 100, 'out', '@out', 'Catalog.1').
+annotation(69, 1, 103, 'end', '@end', 'catalog_join_prices_2019').
+annotation(70, 1, 105, 'begin', '@begin', 'filter_fixed_dose_catalog').
+annotation(71, 1, 106, 'in', '@in', 'Catalog.1').
+annotation(72, 1, 107, 'out', '@out', 'FixedDoseCatalog').
+annotation(73, 1, 109, 'end', '@end', 'filter_fixed_dose_catalog').
+annotation(74, 1, 111, 'begin', '@begin', 'filter_single_dose_catalog').
+annotation(75, 1, 112, 'in', '@in', 'Catalog.1').
+annotation(76, 1, 113, 'out', '@out', 'SingleDoseCatalog').
+annotation(77, 1, 115, 'end', '@end', 'filter_single_dose_catalog').
+annotation(78, 1, 195, 'begin', '@begin', 'prepare_chlmap').
+annotation(79, 1, 196, 'in', '@in', 'CHL.1').
+annotation(80, 1, 197, 'out', '@out', 'CHLMAP').
+annotation(81, 1, 216, 'end', '@end', 'prepare_chlmap').
+annotation(82, 1, 441, 'begin', '@begin', 'prepare_Therapeutic').
+annotation(83, 1, 442, 'in', '@in', 'Catalog.1').
+annotation(84, 1, 443, 'out', '@out', 'Therapeutic').
+annotation(85, 1, 446, 'end', '@end', 'prepare_Therapeutic').
+annotation(86, 1, 449, 'begin', '@begin', 'prepare_chlmap2').
+annotation(87, 1, 450, 'in', '@in', 'CHLMAP').
+annotation(88, 1, 451, 'in', '@in', 'Prices_2019_2021').
+annotation(89, 1, 452, 'in', '@in', 'Therapeutic').
+annotation(90, 1, 453, 'out', '@out', 'CHLMAP2').
+annotation(91, 1, 457, 'end', '@end', 'prepare_chlmap2').
+annotation(92, 1, 469, 'begin', '@begin', 'read_price_database_mar_31').
+annotation(93, 1, 470, 'in', '@in', 'PriceDataBaseMar31_File').
+annotation(94, 1, 470, 'uri', '@URI', 'file:PriceDataBaseMar31.xlsx').
+annotation(95, 1, 471, 'out', '@out', 'PriceDataBase.1').
+annotation(96, 1, 473, 'end', '@end', 'read_price_database_mar_31').
+annotation(97, 1, 477, 'begin', '@begin', 'process_FinalCenabast').
+annotation(98, 1, 478, 'in', '@in', 'CHLMAP').
+annotation(99, 1, 479, 'in', '@in', 'PriceDataBase.1').
+annotation(100, 1, 480, 'in', '@in', 'CHLMAP2').
+annotation(101, 1, 481, 'in', '@in', 'CHL.1').
+annotation(102, 1, 482, 'out', '@out', 'FinalCenabast').
+annotation(103, 1, 502, 'end', '@end', 'process_FinalCenabast').
+annotation(104, 1, 508, 'begin', '@begin', 'read_chl_3').
+annotation(105, 1, 509, 'in', '@in', 'Municipalidades_File').
+annotation(106, 1, 509, 'uri', '@URI', 'Municipalidades.xlsx').
+annotation(107, 1, 510, 'out', '@out', 'CHL3').
+annotation(108, 1, 512, 'end', '@end', 'read_chl_3').
+annotation(109, 1, 514, 'begin', '@begin', 'prepare_chl32').
+annotation(110, 1, 515, 'in', '@in', 'CHL3').
+annotation(111, 1, 516, 'in', '@in', 'Therapeutic').
+annotation(112, 1, 517, 'out', '@out', 'CHL32').
+annotation(113, 1, 520, 'end', '@end', 'prepare_chl32').
+annotation(114, 1, 523, 'begin', '@begin', 'prepare_Municipalidades_data').
+annotation(115, 1, 524, 'in', '@in', 'CHL3').
+annotation(116, 1, 525, 'in', '@in', 'PriceDataBase.1').
+annotation(117, 1, 526, 'in', '@in', 'CHL32').
+annotation(118, 1, 527, 'out', '@out', 'temp_Municipalidades').
+annotation(119, 1, 551, 'end', '@end', 'prepare_Municipalidades_data').
+annotation(120, 1, 555, 'begin', '@begin', 'prepare_chlfinal').
+annotation(121, 1, 556, 'in', '@in', 'FinalCenabast').
+annotation(122, 1, 557, 'in', '@in', 'temp_Municipalidades').
+annotation(123, 1, 558, 'out', '@out', 'CHLFinal.1').
+annotation(124, 1, 560, 'end', '@end', 'prepare_chlfinal').
+annotation(125, 1, 566, 'begin', '@begin', 'read_LEISHMANIASIS').
+annotation(126, 1, 567, 'in', '@in', 'LEISHMANIASIS_File').
+annotation(127, 1, 567, 'uri', '@URI', 'LEISHMANIASIS_Price_Analysis.xlsx').
+annotation(128, 1, 568, 'out', '@out', 'LE').
+annotation(129, 1, 573, 'end', '@end', 'read_LEISHMANIASIS').
+annotation(130, 1, 575, 'begin', '@begin', 'prepare_LEI').
+annotation(131, 1, 576, 'in', '@in', 'LE').
+annotation(132, 1, 577, 'in', '@in', 'PriceDataBase.1').
+annotation(133, 1, 578, 'out', '@out', 'LEI').
+annotation(134, 1, 599, 'end', '@end', 'prepare_LEI').
+annotation(135, 1, 602, 'begin', '@begin', 'combined_lei_chlfinal').
+annotation(136, 1, 603, 'in', '@in', 'CHLFinal.1').
+annotation(137, 1, 604, 'in', '@in', 'LEI').
+annotation(138, 1, 605, 'out', '@out', 'CHLFinal.2').
+annotation(139, 1, 607, 'end', '@end', 'combined_lei_chlfinal').
+annotation(140, 1, 609, 'begin', '@begin', 'read_heartsdata').
+annotation(141, 1, 610, 'in', '@in', 'Hearts_data_File').
+annotation(142, 1, 610, 'uri', '@URI', 'file:Hearts_data_CHL.xlsx').
+annotation(143, 1, 611, 'out', '@out', 'CHL2').
+annotation(144, 1, 613, 'end', '@end', 'read_heartsdata').
+annotation(145, 1, 615, 'begin', '@begin', 'process_chl2').
+annotation(146, 1, 616, 'in', '@in', 'CHL2').
+annotation(147, 1, 617, 'in', '@in', 'PriceDataBase.1').
+annotation(148, 1, 618, 'out', '@out', 'temp_CHL2').
+annotation(149, 1, 636, 'end', '@end', 'process_chl2').
+annotation(150, 1, 640, 'begin', '@begin', 'combined_chlfinal_chl2').
+annotation(151, 1, 641, 'in', '@in', 'CHLFinal.2').
+annotation(152, 1, 642, 'in', '@in', 'temp_CHL2').
+annotation(153, 1, 643, 'out', '@out', 'CHLFinal.3').
+annotation(154, 1, 648, 'end', '@end', 'combined_chlfinal_chl2').
+annotation(155, 1, 651, 'begin', '@begin', 'write_chile_final').
+annotation(156, 1, 652, 'in', '@in', 'CHLFinal.3').
+annotation(157, 1, 653, 'out', '@out', 'ChileFinal_File').
+annotation(158, 1, 653, 'uri', '@URI', 'ChileFinal.xlsx').
+annotation(159, 1, 657, 'end', '@end', 'write_chile_final').
+annotation(160, 1, 680, 'end', '@end', 'ChileProcessing').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(3, 2).
+annotation_qualifies(5, 4).
+annotation_qualifies(7, 6).
+annotation_qualifies(9, 8).
+annotation_qualifies(11, 10).
+annotation_qualifies(13, 12).
+annotation_qualifies(15, 14).
+annotation_qualifies(17, 16).
+annotation_qualifies(19, 18).
+annotation_qualifies(21, 20).
+annotation_qualifies(23, 22).
+annotation_qualifies(33, 32).
+annotation_qualifies(42, 41).
+annotation_qualifies(52, 51).
+annotation_qualifies(94, 93).
+annotation_qualifies(106, 105).
+annotation_qualifies(127, 126).
+annotation_qualifies(142, 141).
+annotation_qualifies(158, 157).

@@ -1,0 +1,87 @@
+# @begin BRA_Antineoplastics_Transformation
+# @in antineoplastics_files  @URI file:~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*
+# @in usd_clean  @URI file:USD_BRLClean.csv
+# @in catalog_file  @URI file:~/RStudio/PAHO/CatalogwPreciosClean.csv
+# @out output_file
+
+#     @begin read_usd_brlclean
+#     @in usd_clean  @URI file:USD_BRLClean.csv
+#     @out Rea_USD
+#     @end read_usd_brlclean
+
+#     @begin read_data_file  @desc read multiple input files in directory and agregate the files into a variable DataProv
+#     @in ~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*  @as antineoplastics_files
+#     @out DataProv
+#     @end read_data_file
+
+#     @begin read_catalog_file  @desc read input catalog file, assign to variable Catalog
+#     @in ~/RStudio/PAHO/CatalogwPreciosClean.csv  @as catalog_file
+#     @out Catalog
+#     @end read_catalog_file
+
+#     @begin to_consider  @desc also output catalog to consider which is a filter based on TerapeuticArea
+#     @in Catalog
+#     @param Antineoplastics  @as TerapeuticArea
+#     @out toconsider
+#     @end to_consider
+
+#     @begin dataprov_filtering_1  @desc filtering DataProv based on raw data columns and numberings/orders in the file
+#     @in DataProv
+#     @param c(2:4,6:10,12,14:22)
+#     @out DataProvFilter1
+#     @end dataprov_filtering_1
+
+#     @begin dataprov_filtering_2  @desc additional filtering based onvalue on the column
+#     @param not(ACESSÓRIO|CANETA|NUTRIÇÃO)
+#     @in DataProvFilter1
+#     @out DataProvFilter2
+#     @end dataprov_filtering_2
+
+#     @begin separate_single_fixed_dose  @desc SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries
+#     @in DataProvFilter2
+#     @out Single
+#     @out Falta
+#     @out FixedDose
+#     @end separate_single_fixed_dose
+
+#     @begin create_new_columns  @desc SEPARATE SINGLE AND FIXED DOSE (MORE THAN ONE MOLECULE) Entries
+#     @in Single
+#     @in Falta
+#     @in FixedDose
+#     @out Single.1
+#     @out Falta.1
+#     @out FixedDose.1
+#     @end create_new_columns  @desc Single table for Primer and Concentraction1
+# @in Single.1
+# @out SingleNom
+
+#     @begin join_single_fixed_dose  @desc JOIN SINGLE AND FIXED DOSE ENTRIES
+#     @in Single.1
+#     @in FixedDose.1
+#     @in toconsider
+#     @out DatosBr
+#     @end join_single_fixed_dose
+
+#     @begin datosbr_exceptions  @desc ADD EXCEPTIONS
+#     @in DatosBr
+#     @out DatosBr.1
+#     @end datosbr_exceptions
+
+#     @begin finalize_datos_br
+#     @in toconsider
+#     @in DatosBr.1
+#     @in Rea_USD
+#     @out DatosBrFinal
+#     @end finalize_datos_br
+
+#     @begin finalize_data
+#     @in DatosBrFinal
+#     @out FinalData
+#     @end finalize_data
+
+#     @begin write_final_data
+#     @in FinalData
+#     @out output_file  @URI file:~/RStudio/PAHO/Scrappers/Brasil/\<TerapeuticArea\>.csv
+#     @end write_final_data
+
+# @end BRA_Antineoplastics_Transformation

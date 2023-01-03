@@ -1,0 +1,227 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'PeruProcessing', 'PeruProcessing', 1, 48).
+program(2, 'read_prices', 'PeruProcessing.read_prices', 10, 14).
+program(3, 'read_perumed', 'PeruProcessing.read_perumed', 15, 19).
+program(4, 'read_catalog', 'PeruProcessing.read_catalog', 20, 24).
+program(5, 'filter_datos', 'PeruProcessing.filter_datos', 25, 28).
+program(6, 'filter_perumed', 'PeruProcessing.filter_perumed', 29, 33).
+program(7, 'merge_perumed_precios', 'PeruProcessing.merge_perumed_precios', 34, 38).
+program(8, 'create_final_data', 'PeruProcessing.create_final_data', 39, 42).
+program(9, 'write_final_data', 'PeruProcessing.write_final_data', 43, 47).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'in', 'Prices_2019_2021_File', 'PeruProcessing<-Prices_2019_2021_File', 2, 1).
+port(2, 'in', 'Peru_Scrapped_Files', 'PeruProcessing<-Peru_Scrapped_Files', 4, 2).
+port(3, 'in', 'Taxonomy_File', 'PeruProcessing<-Taxonomy_File', 6, 3).
+port(4, 'out', 'PeruAntineoPlasticsClean_File', 'PeruProcessing->PeruAntineoPlasticsClean_File', 8, 4).
+port(5, 'in', 'Prices_2019_2021_File', 'PeruProcessing.read_prices<-Prices_2019_2021_File', 11, 5).
+port(6, 'out', 'Precios', 'PeruProcessing.read_prices->Precios', 13, 6).
+port(7, 'in', 'Peru_Scrapped_Files', 'PeruProcessing.read_perumed<-Peru_Scrapped_Files', 16, 7).
+port(8, 'out', 'PeruMed', 'PeruProcessing.read_perumed->PeruMed', 18, 8).
+port(9, 'in', 'Taxonomy_File', 'PeruProcessing.read_catalog<-Taxonomy_File', 21, 9).
+port(10, 'out', 'Catalog', 'PeruProcessing.read_catalog->Catalog', 23, 10).
+port(11, 'in', 'Catalog', 'PeruProcessing.filter_datos<-Catalog', 26, 10).
+port(12, 'out', 'DatosFinal', 'PeruProcessing.filter_datos->DatosFinal', 27, 11).
+port(13, 'in', 'PeruMed', 'PeruProcessing.filter_perumed<-PeruMed', 30, 8).
+port(14, 'in', 'DatosFinal', 'PeruProcessing.filter_perumed<-DatosFinal', 31, 11).
+port(15, 'out', 'PeruMed.1', 'PeruProcessing.filter_perumed->PeruMed.1', 32, 12).
+port(16, 'in', 'PeruMed.1', 'PeruProcessing.merge_perumed_precios<-PeruMed.1', 35, 12).
+port(17, 'in', 'Precios', 'PeruProcessing.merge_perumed_precios<-Precios', 36, 6).
+port(18, 'out', 'PeruMed.2', 'PeruProcessing.merge_perumed_precios->PeruMed.2', 37, 13).
+port(19, 'in', 'PeruMed.2', 'PeruProcessing.create_final_data<-PeruMed.2', 40, 13).
+port(20, 'out', 'FinalData', 'PeruProcessing.create_final_data->FinalData', 41, 14).
+port(21, 'in', 'FinalData', 'PeruProcessing.write_final_data<-FinalData', 44, 14).
+port(22, 'out', 'PeruAntineoPlasticsClean_File', 'PeruProcessing.write_final_data->PeruAntineoPlasticsClean_File', 45, 15).
+
+% FACT: port_alias(port_id, alias).
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(1, 'file:Prices_2019-2021.xlsx').
+port_uri_template(2, 'file:Scrappers/Perú/*').
+port_uri_template(3, 'file:Taxonomy.xlsx').
+port_uri_template(4, 'file:PeruAntineoPlasticsClean.csv').
+port_uri_template(5, 'file:Prices_2019-2021.xlsx').
+port_uri_template(7, 'file:Scrappers/Perú/*').
+port_uri_template(9, 'file:Taxonomy.xlsx').
+port_uri_template(22, 'file:PeruAntineoPlasticsClean.csv').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(1, 1).
+has_in_port(1, 2).
+has_in_port(1, 3).
+has_in_port(2, 5).
+has_in_port(3, 7).
+has_in_port(4, 9).
+has_in_port(5, 11).
+has_in_port(6, 13).
+has_in_port(6, 14).
+has_in_port(7, 16).
+has_in_port(7, 17).
+has_in_port(8, 19).
+has_in_port(9, 21).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 4).
+has_out_port(2, 6).
+has_out_port(3, 8).
+has_out_port(4, 10).
+has_out_port(5, 12).
+has_out_port(6, 15).
+has_out_port(7, 18).
+has_out_port(8, 20).
+has_out_port(9, 22).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'Prices_2019_2021_File', '[Prices_2019_2021_File]').
+data(2, 'Peru_Scrapped_Files', '[Peru_Scrapped_Files]').
+data(3, 'Taxonomy_File', '[Taxonomy_File]').
+data(4, 'PeruAntineoPlasticsClean_File', '[PeruAntineoPlasticsClean_File]').
+data(5, 'Prices_2019_2021_File', 'PeruProcessing[Prices_2019_2021_File]').
+data(6, 'Precios', 'PeruProcessing[Precios]').
+data(7, 'Peru_Scrapped_Files', 'PeruProcessing[Peru_Scrapped_Files]').
+data(8, 'PeruMed', 'PeruProcessing[PeruMed]').
+data(9, 'Taxonomy_File', 'PeruProcessing[Taxonomy_File]').
+data(10, 'Catalog', 'PeruProcessing[Catalog]').
+data(11, 'DatosFinal', 'PeruProcessing[DatosFinal]').
+data(12, 'PeruMed.1', 'PeruProcessing[PeruMed.1]').
+data(13, 'PeruMed.2', 'PeruProcessing[PeruMed.2]').
+data(14, 'FinalData', 'PeruProcessing[FinalData]').
+data(15, 'PeruAntineoPlasticsClean_File', 'PeruProcessing[PeruAntineoPlasticsClean_File]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 4).
+channel(2, 5).
+channel(3, 7).
+channel(4, 9).
+channel(5, 10).
+channel(6, 8).
+channel(7, 11).
+channel(8, 12).
+channel(9, 6).
+channel(10, 13).
+channel(11, 14).
+channel(12, 1).
+channel(13, 2).
+channel(14, 3).
+channel(15, 15).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(22, 1).
+port_connects_to_channel(5, 2).
+port_connects_to_channel(7, 3).
+port_connects_to_channel(9, 4).
+port_connects_to_channel(10, 5).
+port_connects_to_channel(11, 5).
+port_connects_to_channel(8, 6).
+port_connects_to_channel(13, 6).
+port_connects_to_channel(12, 7).
+port_connects_to_channel(14, 7).
+port_connects_to_channel(15, 8).
+port_connects_to_channel(16, 8).
+port_connects_to_channel(6, 9).
+port_connects_to_channel(17, 9).
+port_connects_to_channel(18, 10).
+port_connects_to_channel(19, 10).
+port_connects_to_channel(20, 11).
+port_connects_to_channel(21, 11).
+port_connects_to_channel(5, 12).
+port_connects_to_channel(7, 13).
+port_connects_to_channel(9, 14).
+port_connects_to_channel(22, 15).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+inflow_connects_to_channel(1, 2).
+inflow_connects_to_channel(2, 3).
+inflow_connects_to_channel(3, 4).
+inflow_connects_to_channel(1, 12).
+inflow_connects_to_channel(2, 13).
+inflow_connects_to_channel(3, 14).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+outflow_connects_to_channel(4, 1).
+outflow_connects_to_channel(4, 15).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).
+
+% FACT: log_template(log_template_id, port_id, entry_template, log_annotation_id).
+
+% FACT: log_template_variable(log_variable_id, variable_name, log_template_id).
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, '').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@begin', 'PeruProcessing').
+annotation(2, 1, 2, 'in', '@in', 'Prices_2019_2021_File').
+annotation(3, 1, 2, 'uri', '@URI', 'file:Prices_2019-2021.xlsx').
+annotation(4, 1, 3, 'in', '@in', 'Peru_Scrapped_Files').
+annotation(5, 1, 3, 'uri', '@URI', 'file:Scrappers/Perú/*').
+annotation(6, 1, 4, 'in', '@in', 'Taxonomy_File').
+annotation(7, 1, 4, 'uri', '@URI', 'file:Taxonomy.xlsx').
+annotation(8, 1, 5, 'out', '@out', 'PeruAntineoPlasticsClean_File').
+annotation(9, 1, 5, 'uri', '@URI', 'file:PeruAntineoPlasticsClean.csv').
+annotation(10, 1, 31, 'begin', '@begin', 'read_prices').
+annotation(11, 1, 32, 'in', '@in', 'Prices_2019_2021_File').
+annotation(12, 1, 32, 'uri', '@URI', 'file:Prices_2019-2021.xlsx').
+annotation(13, 1, 33, 'out', '@out', 'Precios').
+annotation(14, 1, 35, 'end', '@end', 'read_prices').
+annotation(15, 1, 38, 'begin', '@begin', 'read_perumed').
+annotation(16, 1, 39, 'in', '@in', 'Peru_Scrapped_Files').
+annotation(17, 1, 39, 'uri', '@URI', 'file:Scrappers/Perú/*').
+annotation(18, 1, 40, 'out', '@out', 'PeruMed').
+annotation(19, 1, 46, 'end', '@end', 'read_perumed').
+annotation(20, 1, 49, 'begin', '@begin', 'read_catalog').
+annotation(21, 1, 50, 'in', '@in', 'Taxonomy_File').
+annotation(22, 1, 50, 'uri', '@URI', 'file:Taxonomy.xlsx').
+annotation(23, 1, 51, 'out', '@out', 'Catalog').
+annotation(24, 1, 53, 'end', '@end', 'read_catalog').
+annotation(25, 1, 55, 'begin', '@begin', 'filter_datos').
+annotation(26, 1, 56, 'in', '@in', 'Catalog').
+annotation(27, 1, 57, 'out', '@out', 'DatosFinal').
+annotation(28, 1, 79, 'end', '@end', 'read_catalog').
+annotation(29, 1, 82, 'begin', '@begin', 'filter_perumed').
+annotation(30, 1, 83, 'in', '@in', 'PeruMed').
+annotation(31, 1, 84, 'in', '@in', 'DatosFinal').
+annotation(32, 1, 85, 'out', '@out', 'PeruMed.1').
+annotation(33, 1, 140, 'end', '@end', 'filter_perumed').
+annotation(34, 1, 142, 'begin', '@begin', 'merge_perumed_precios').
+annotation(35, 1, 143, 'in', '@in', 'PeruMed.1').
+annotation(36, 1, 144, 'in', '@in', 'Precios').
+annotation(37, 1, 145, 'out', '@out', 'PeruMed.2').
+annotation(38, 1, 159, 'end', '@end', 'merge_perumed_precios').
+annotation(39, 1, 162, 'begin', '@begin', 'create_final_data').
+annotation(40, 1, 163, 'in', '@in', 'PeruMed.2').
+annotation(41, 1, 164, 'out', '@out', 'FinalData').
+annotation(42, 1, 189, 'end', '@end', 'create_final_data').
+annotation(43, 1, 191, 'begin', '@begin', 'write_final_data').
+annotation(44, 1, 192, 'in', '@in', 'FinalData').
+annotation(45, 1, 193, 'out', '@out', 'PeruAntineoPlasticsClean_File').
+annotation(46, 1, 193, 'uri', '@URI', 'file:PeruAntineoPlasticsClean.csv').
+annotation(47, 1, 195, 'end', '@end', 'write_final_data').
+annotation(48, 1, 197, 'end', '@end', 'PeruProcessing').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(3, 2).
+annotation_qualifies(5, 4).
+annotation_qualifies(7, 6).
+annotation_qualifies(9, 8).
+annotation_qualifies(12, 11).
+annotation_qualifies(17, 16).
+annotation_qualifies(22, 21).
+annotation_qualifies(46, 45).

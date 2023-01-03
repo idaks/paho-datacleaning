@@ -1,0 +1,204 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Helvetica; fontsize=18; labelloc=t
+label=ChileProcessing
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing atomic programs in workflow */
+read_entry_files [shape=record rankdir=LR label="{<f0> read_entry_files |<f1> Read the Entry files, the full database and the Taxonomy (the Catalog)}"];
+filter_chl
+read_price_database
+read_price_2019
+read_price_taxonomy
+combined_chl
+read_catalog
+combined_new_entries
+processed_catalog
+catalog_join_prices_2019
+filter_fixed_dose_catalog
+filter_single_dose_catalog
+prepare_chlmap
+prepare_Therapeutic
+prepare_chlmap2
+read_price_database_mar_31
+process_FinalCenabast
+read_chl_3
+prepare_chl32
+prepare_Municipalidades_data
+prepare_chlfinal
+read_LEISHMANIASIS
+prepare_LEI
+combined_lei_chlfinal
+read_heartsdata
+process_chl2
+combined_chlfinal_chl2
+write_chile_final
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+ChileFinal_File [shape=record rankdir=LR label="{<f0> ChileFinal_File |<f1> ChileFinal.xlsx}"];
+CHL_Cenabast_Filtered [shape=record rankdir=LR label="{<f0> CHL_Cenabast_Filtered |<f1> file\:CHL_Cenabast_Filtered_20-22.xlsx}"];
+CHL
+PriceDataBaseFile [shape=record rankdir=LR label="{<f0> PriceDataBaseFile |<f1> file\:PriceDataBase.xlsx}"];
+Prices_2019_2021_File [shape=record rankdir=LR label="{<f0> Prices_2019_2021_File |<f1> file\:Prices_2019-2021.xlsx}"];
+TaxonomyFile [shape=record rankdir=LR label="{<f0> TaxonomyFile |<f1> file\:Taxonomy.xlsx}"];
+"CHL.1"
+PriceDataBase
+New_Catalog_Products_File [shape=record rankdir=LR label="{<f0> New_Catalog_Products_File |<f1> New_Catalog_Products.xlsx}"];
+NewEntries
+Taxonomy
+NewEntries2
+Catalog
+Prices_2019_2021
+"Catalog.1"
+CHLMAP
+Therapeutic
+PriceDataBaseMar31_File [shape=record rankdir=LR label="{<f0> PriceDataBaseMar31_File |<f1> file\:PriceDataBaseMar31.xlsx}"];
+"PriceDataBase.1"
+CHLMAP2
+Municipalidades_File [shape=record rankdir=LR label="{<f0> Municipalidades_File |<f1> Municipalidades.xlsx}"];
+CHL3
+CHL32
+FinalCenabast
+temp_Municipalidades
+LEISHMANIASIS_File [shape=record rankdir=LR label="{<f0> LEISHMANIASIS_File |<f1> LEISHMANIASIS_Price_Analysis.xlsx}"];
+LE
+"CHLFinal.1"
+LEI
+Hearts_data_File [shape=record rankdir=LR label="{<f0> Hearts_data_File |<f1> file\:Hearts_data_CHL.xlsx}"];
+CHL2
+"CHLFinal.2"
+temp_CHL2
+"CHLFinal.3"
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+read_entry_files -> CHL
+CHL_Cenabast_Filtered -> read_entry_files
+filter_chl -> "CHL.1"
+CHL -> filter_chl
+read_price_database -> PriceDataBase
+PriceDataBaseFile -> read_price_database
+read_price_2019 -> Prices_2019_2021
+Prices_2019_2021_File -> read_price_2019
+read_price_taxonomy -> Taxonomy
+TaxonomyFile -> read_price_taxonomy
+combined_chl -> CHLFinal
+"CHL.1" -> combined_chl
+PriceDataBase -> combined_chl
+read_catalog -> NewEntries
+New_Catalog_Products_File -> read_catalog
+combined_new_entries -> NewEntries2
+NewEntries -> combined_new_entries
+Taxonomy -> combined_new_entries
+processed_catalog -> Catalog
+NewEntries2 -> processed_catalog
+Taxonomy -> processed_catalog
+catalog_join_prices_2019 -> "Catalog.1"
+Catalog -> catalog_join_prices_2019
+Prices_2019_2021 -> catalog_join_prices_2019
+filter_fixed_dose_catalog -> FixedDoseCatalog
+"Catalog.1" -> filter_fixed_dose_catalog
+filter_single_dose_catalog -> SingleDoseCatalog
+"Catalog.1" -> filter_single_dose_catalog
+prepare_chlmap -> CHLMAP
+"CHL.1" -> prepare_chlmap
+prepare_Therapeutic -> Therapeutic
+"Catalog.1" -> prepare_Therapeutic
+prepare_chlmap2 -> CHLMAP2
+CHLMAP -> prepare_chlmap2
+Prices_2019_2021 -> prepare_chlmap2
+Therapeutic -> prepare_chlmap2
+read_price_database_mar_31 -> "PriceDataBase.1"
+PriceDataBaseMar31_File -> read_price_database_mar_31
+process_FinalCenabast -> FinalCenabast
+CHLMAP -> process_FinalCenabast
+"PriceDataBase.1" -> process_FinalCenabast
+CHLMAP2 -> process_FinalCenabast
+"CHL.1" -> process_FinalCenabast
+read_chl_3 -> CHL3
+Municipalidades_File -> read_chl_3
+prepare_chl32 -> CHL32
+CHL3 -> prepare_chl32
+Therapeutic -> prepare_chl32
+prepare_Municipalidades_data -> temp_Municipalidades
+CHL3 -> prepare_Municipalidades_data
+"PriceDataBase.1" -> prepare_Municipalidades_data
+CHL32 -> prepare_Municipalidades_data
+prepare_chlfinal -> "CHLFinal.1"
+FinalCenabast -> prepare_chlfinal
+temp_Municipalidades -> prepare_chlfinal
+read_LEISHMANIASIS -> LE
+LEISHMANIASIS_File -> read_LEISHMANIASIS
+prepare_LEI -> LEI
+LE -> prepare_LEI
+"PriceDataBase.1" -> prepare_LEI
+combined_lei_chlfinal -> "CHLFinal.2"
+"CHLFinal.1" -> combined_lei_chlfinal
+LEI -> combined_lei_chlfinal
+read_heartsdata -> CHL2
+Hearts_data_File -> read_heartsdata
+process_chl2 -> temp_CHL2
+CHL2 -> process_chl2
+"PriceDataBase.1" -> process_chl2
+combined_chlfinal_chl2 -> "CHLFinal.3"
+"CHLFinal.2" -> combined_chlfinal_chl2
+temp_CHL2 -> combined_chlfinal_chl2
+write_chile_final -> ChileFinal_File
+"CHLFinal.3" -> write_chile_final
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+CHL_Cenabast_Filtered_input_port [label=""]
+PriceDataBaseFile_input_port [label=""]
+Prices_2019_2021_File_input_port [label=""]
+TaxonomyFile_input_port [label=""]
+New_Catalog_Products_File_input_port [label=""]
+Municipalidades_File_input_port [label=""]
+LEISHMANIASIS_File_input_port [label=""]
+PriceDataBaseMar31_File_input_port [label=""]
+Hearts_data_File_input_port [label=""]
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+ChileFinal_File_output_port [label=""]
+
+/* Edges from input ports to channels */
+CHL_Cenabast_Filtered_input_port -> CHL_Cenabast_Filtered
+PriceDataBaseFile_input_port -> PriceDataBaseFile
+Prices_2019_2021_File_input_port -> Prices_2019_2021_File
+TaxonomyFile_input_port -> TaxonomyFile
+New_Catalog_Products_File_input_port -> New_Catalog_Products_File
+Municipalidades_File_input_port -> Municipalidades_File
+LEISHMANIASIS_File_input_port -> LEISHMANIASIS_File
+PriceDataBaseMar31_File_input_port -> PriceDataBaseMar31_File
+Hearts_data_File_input_port -> Hearts_data_File
+
+/* Edges from channels to output ports */
+ChileFinal_File -> ChileFinal_File_output_port
+
+/* End of top-level graph */
+}

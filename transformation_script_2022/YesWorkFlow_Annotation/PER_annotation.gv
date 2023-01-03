@@ -1,0 +1,94 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Helvetica; fontsize=18; labelloc=t
+label=PeruProcessing
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; penwidth=0
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing atomic programs in workflow */
+read_prices
+read_perumed
+read_catalog
+filter_datos
+filter_perumed
+merge_perumed_precios
+create_final_data
+write_final_data
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+PeruAntineoPlasticsClean_File [shape=record rankdir=LR label="{<f0> PeruAntineoPlasticsClean_File |<f1> file\:PeruAntineoPlasticsClean.csv}"];
+Prices_2019_2021_File [shape=record rankdir=LR label="{<f0> Prices_2019_2021_File |<f1> file\:Prices_2019-2021.xlsx}"];
+Peru_Scrapped_Files [shape=record rankdir=LR label="{<f0> Peru_Scrapped_Files |<f1> file\:Scrappers/Perú/*}"];
+Taxonomy_File [shape=record rankdir=LR label="{<f0> Taxonomy_File |<f1> file\:Taxonomy.xlsx}"];
+Catalog
+PeruMed
+DatosFinal
+"PeruMed.1"
+Precios
+"PeruMed.2"
+FinalData
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+read_prices -> Precios
+Prices_2019_2021_File -> read_prices
+read_perumed -> PeruMed
+Peru_Scrapped_Files -> read_perumed
+read_catalog -> Catalog
+Taxonomy_File -> read_catalog
+filter_datos -> DatosFinal
+Catalog -> filter_datos
+filter_perumed -> "PeruMed.1"
+PeruMed -> filter_perumed
+DatosFinal -> filter_perumed
+merge_perumed_precios -> "PeruMed.2"
+"PeruMed.1" -> merge_perumed_precios
+Precios -> merge_perumed_precios
+create_final_data -> FinalData
+"PeruMed.2" -> create_final_data
+write_final_data -> PeruAntineoPlasticsClean_File
+FinalData -> write_final_data
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+Prices_2019_2021_File_input_port [label=""]
+Peru_Scrapped_Files_input_port [label=""]
+Taxonomy_File_input_port [label=""]
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+PeruAntineoPlasticsClean_File_output_port [label=""]
+
+/* Edges from input ports to channels */
+Prices_2019_2021_File_input_port -> Prices_2019_2021_File
+Peru_Scrapped_Files_input_port -> Peru_Scrapped_Files
+Taxonomy_File_input_port -> Taxonomy_File
+
+/* Edges from channels to output ports */
+PeruAntineoPlasticsClean_File -> PeruAntineoPlasticsClean_File_output_port
+
+/* End of top-level graph */
+}

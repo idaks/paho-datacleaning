@@ -1,0 +1,170 @@
+# @begin ChileProcessing
+# @in CHL_Cenabast_Filtered  @URI file:CHL_Cenabast_Filtered_20-22.xlsx
+# @in PriceDataBaseFile  @URI file:PriceDataBase.xlsx
+# @in Prices_2019_2021_File  @URI file:Prices_2019-2021.xlsx
+# @in TaxonomyFile  @URI file:Taxonomy.xlsx
+# @in New_Catalog_Products_File  @URI  New_Catalog_Products.xlsx
+# @in Municipalidades_File  @URI Municipalidades.xlsx
+# @in LEISHMANIASIS_File  @URI LEISHMANIASIS_Price_Analysis.xlsx
+# @in PriceDataBaseMar31_File  @URI file:PriceDataBaseMar31.xlsx
+# @in Hearts_data_File  @URI file:Hearts_data_CHL.xlsx
+# @out ChileFinal_File as  @URI file:ChileFinal.xlsx
+
+#     @begin read_entry_files  @desc Read the Entry files, the full database and the Taxonomy (the Catalog)
+#     @in CHL_Cenabast_Filtered
+#     @out CHL
+#     @end read_entry_files
+
+#     @begin filter_chl
+#     @in CHL
+#     @out CHL.1
+#     @end filter_chl
+
+#     @begin read_price_database
+#     @in PriceDataBaseFile  @URI PriceDataBase.xlsx
+#     @out PriceDataBase
+#     @end read_price_database
+
+#     @begin read_price_2019
+#     @in Prices_2019_2021_File
+#     @out Prices_2019_2021
+#     @end read_price_2019
+
+#     @begin read_price_taxonomy
+#     @in TaxonomyFile  @URI file:Taxonomy.xlsx
+#     @out Taxonomy
+#     @end read_price_taxonomy
+
+#     @begin combined_chl
+#     @in CHL.1
+#     @in PriceDataBase
+#     @out CHLFinal
+#     @end combined_chl
+
+#     @begin read_catalog
+#     @in New_Catalog_Products_File  @URI  file:Price Analysis/PriceDB/New Catalog Products.xlsx
+#     @out NewEntries
+#     @end read_catalog
+
+#     @begin combined_new_entries
+#     @in NewEntries
+#     @in Taxonomy
+#     @out NewEntries2
+#     @end combined_new_entries
+
+#     @begin processed_catalog
+#     @in NewEntries2
+#     @in Taxonomy
+#     @out Catalog
+#     @end processed_catalog
+
+#     @begin catalog_join_prices_2019
+#     @in Catalog
+#     @in Prices_2019_2021
+#     @out Catalog.1
+#     @end catalog_join_prices_2019
+
+#     @begin filter_fixed_dose_catalog
+#     @in Catalog.1
+#     @out FixedDoseCatalog
+#     @end filter_fixed_dose_catalog
+
+#     @begin filter_single_dose_catalog
+#     @in Catalog.1
+#     @out SingleDoseCatalog
+#     @end filter_single_dose_catalog
+
+#     @begin prepare_chlmap
+#     @in CHL.1
+#     @out CHLMAP
+#     @end prepare_chlmap
+
+#     @begin prepare_Therapeutic
+#     @in Catalog.1
+#     @out Therapeutic
+#     @end prepare_Therapeutic
+
+#     @begin prepare_chlmap2
+#     @in CHLMAP
+#     @in Prices_2019_2021
+#     @in Therapeutic
+#     @out CHLMAP2
+#     @end prepare_chlmap2
+
+#     @begin read_price_database_mar_31
+#     @in PriceDataBaseMar31_File  @URI file:PriceDataBaseMar31.xlsx
+#     @out PriceDataBase.1
+#     @end read_price_database_mar_31
+
+#     @begin process_FinalCenabast
+#     @in CHLMAP
+#     @in PriceDataBase.1
+#     @in CHLMAP2
+#     @in CHL.1
+#     @out FinalCenabast
+#     @end process_FinalCenabast
+
+#     @begin read_chl_3
+#     @in Municipalidades_File  @URI Municipalidades.xlsx
+#     @out CHL3
+#     @end read_chl_3
+
+#     @begin prepare_chl32
+#     @in CHL3
+#     @in Therapeutic
+#     @out CHL32
+#     @end prepare_chl32
+
+#     @begin prepare_Municipalidades_data
+#     @in CHL3
+#     @in PriceDataBase.1
+#     @in CHL32
+#     @out temp_Municipalidades
+#     @end prepare_Municipalidades_data
+
+#     @begin prepare_chlfinal
+#     @in FinalCenabast
+#     @in temp_Municipalidades
+#     @out CHLFinal.1
+#     @end prepare_chlfinal
+
+#     @begin read_LEISHMANIASIS
+#     @in LEISHMANIASIS_File  @URI LEISHMANIASIS_Price_Analysis.xlsx
+#     @out LE
+#     @end read_LEISHMANIASIS
+
+#     @begin prepare_LEI
+#     @in LE
+#     @in PriceDataBase.1
+#     @out LEI
+#     @end prepare_LEI
+
+#     @begin combined_lei_chlfinal
+#     @in CHLFinal.1
+#     @in LEI
+#     @out CHLFinal.2
+#     @end combined_lei_chlfinal
+
+#     @begin read_heartsdata
+#     @in Hearts_data_File  @URI file:Hearts_data_CHL.xlsx
+#     @out CHL2
+#     @end read_heartsdata
+
+#     @begin process_chl2
+#     @in CHL2
+#     @in PriceDataBase.1
+#     @out temp_CHL2
+#     @end process_chl2
+
+#     @begin combined_chlfinal_chl2
+#     @in CHLFinal.2
+#     @in temp_CHL2
+#     @out CHLFinal.3
+#     @end combined_chlfinal_chl2
+
+#     @begin write_chile_final
+#     @in CHLFinal.3
+#     @out ChileFinal_File as  @URI ChileFinal.xlsx
+#     @end write_chile_final
+
+# @end ChileProcessing

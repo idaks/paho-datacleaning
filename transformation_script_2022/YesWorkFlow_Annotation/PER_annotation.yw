@@ -1,0 +1,49 @@
+# @begin PeruProcessing
+# @in Prices_2019_2021_File  @URI file:Prices_2019-2021.xlsx
+# @in Peru_Scrapped_Files  @URI file:Scrappers/Perú/*
+# @in Taxonomy_File  @URI file:Taxonomy.xlsx
+# @out PeruAntineoPlasticsClean_File  @URI file:PeruAntineoPlasticsClean.csv
+
+#     @begin read_prices
+#     @in Prices_2019_2021_File  @URI file:Prices_2019-2021.xlsx
+#     @out Precios
+#     @end read_prices
+
+#     @begin read_perumed
+#     @in Peru_Scrapped_Files  @URI file:Scrappers/Perú/*
+#     @out PeruMed
+#     @end read_perumed
+
+#     @begin read_catalog
+#     @in Taxonomy_File  @URI file:Taxonomy.xlsx
+#     @out Catalog
+#     @end read_catalog
+
+#     @begin filter_datos
+#     @in Catalog
+#     @out DatosFinal
+#     @end read_catalog
+
+#     @begin filter_perumed
+#     @in PeruMed
+#     @in DatosFinal
+#     @out PeruMed.1
+#     @end filter_perumed
+
+#     @begin merge_perumed_precios
+#     @in PeruMed.1
+#     @in Precios
+#     @out PeruMed.2
+#     @end merge_perumed_precios
+
+#     @begin create_final_data
+#     @in PeruMed.2
+#     @out FinalData
+#     @end create_final_data
+
+#     @begin write_final_data
+#     @in FinalData
+#     @out PeruAntineoPlasticsClean_File  @URI file:PeruAntineoPlasticsClean.csv
+#     @end write_final_data
+
+# @end PeruProcessing
