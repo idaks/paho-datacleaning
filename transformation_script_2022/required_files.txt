@@ -1,0 +1,20 @@
+BRA
+~/RStudio/PAHO/Scrappers/Brasil/Antineoplasticos/*
+~/RStudio/PAHO/CatalogwPreciosClean.csv
+~/RStudio/PAHO/Scrappers/Brasil/BRL-USD/USD_BRLClean.csv
+
+PER
+~/RStudio/PAHO/Scrappers/Perú/*antineoplastics*
+~/RStudio/PAHO/Prices 2019-2021.xlsx
+~/RStudio/PAHO/Scrappers/Taxonomy.xlsx
+
+CHL
+~/OneDrive - Pan American Health Organization/Price Analysis/CHL/CHL Cenabast Filtered 20-22.xlsx"
+~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/PriceDataBase.xlsx
+~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/Prices 2019-2021.xlsx
+~/RStudio/PAHO/Scrappers/Taxonomy.xlsx
+~/OneDrive - Pan American Health Organization/Price Analysis/PriceDB/New Catalog Products.xlsx
+~/RStudio/PAHO/PriceDataBaseMar31.xlsx
+~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Municipalidades.xlsx
+~/OneDrive - Pan American Health Organization/Price Analysis/LEISH/LEISHMANIASIS Price Analysis.xlsx
+~/OneDrive - Pan American Health Organization/Price Analysis/CHL/Hearts data CHL.xlsx
